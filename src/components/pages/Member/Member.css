@@ -1,0 +1,160 @@
+.member__info__header {
+    margin-bottom: 20px;
+}
+
+.member__info__header>h3 {
+    color: #03256C;
+}
+
+.member__info__header>p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    padding: 8px 5px;
+    line-height: 2;
+}
+
+.member__info__body {
+    margin: 5px 5px;
+}
+
+.member__info__items>h4 {
+    padding: 5px;
+    color: #03256C;
+    margin-bottom: 8px;
+    text-decoration: underline;
+    text-align: center;
+}
+
+.member__info__items>p {
+    padding: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 2;
+    text-align: justify;
+}
+
+.eligibility__info__header {
+    margin-bottom: 20px;
+}
+
+.eligibility__info__header>h3 {
+    color: #03256C;
+}
+
+.eligibility__info__header>p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    padding: 8px 5px;
+    line-height: 2;
+}
+
+.eligibility__body {
+    margin: 10px 5px;
+}
+
+.eligibility__list {
+    list-style-type: none;
+    margin-left: 20px;
+}
+
+.eligibility__list>li {
+    padding: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+}
+
+.eligibility__list>li::before {
+    content: "•";
+    /* Insert content that looks like bullets */
+    padding-right: 8px;
+    color: #03256C;
+    /* Or a color you prefer */
+}
+
+.member__routes {
+    margin: 20px 5px;
+}
+
+.routes__title {
+    color: #03256C;
+}
+
+.routes__items {
+    margin: 8px 4px;
+}
+
+.routes__item__heading {
+    color: #03256C;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 8px;
+}
+
+.routes__item__heading__note {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: justify;
+    line-height: 1.5;
+}
+
+.route__item__list {
+    padding: 5px;
+}
+
+.route__item__list>h4 {
+    color: #03256C;
+    text-align: center;
+}
+
+.route__item__list>p {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: justify;
+    line-height: 2;
+}
+
+.benefit__container {
+    margin: 20px 4px;
+}
+
+.benefit__list {
+    text-align: justify;
+    line-height: 2;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.benefit__list>strong {
+    color: #03256C;
+}
+
+.member__upgrade {
+    margin: 20px 5px;
+}
+
+.member__upgrade>p {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-weight: 600;
+}
+
+.member__upgrade>ol {
+    margin: 10px 4px;
+}
+
+.member__upgrade>ol>li {
+    line-height: 2;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.inner__ungrade__list {
+    margin-left: 10px;
+}
+
+.inner__ungrade__list>li {
+    line-height: 1.5;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.membership__tables {
+    margin: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}

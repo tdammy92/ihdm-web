@@ -1,0 +1,45 @@
+.page__Container {
+    margin: 0px 5px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #eee;
+}
+
+.page__title {
+    margin-top: 10px;
+    margin-left: 15px;
+    color: #03256C;
+}
+
+.page__subtitle {
+    margin-top: 10px;
+    color: #03256C;
+    /* text-align: center; */
+}
+
+.page__paragraph {
+    line-height: 2;
+    text-align: justify;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 5px;
+}
+
+.LongLIne {
+    height: 4px;
+    background-color: #03256C;
+    margin: 50px 0;
+}
+
+.bank__details {
+    margin-left: 20px;
+    margin-right: 20px;
+    text-align: center;
+    line-height: 2;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+}
+
+.bank__details>h3 {
+    color: #03256C;
+}

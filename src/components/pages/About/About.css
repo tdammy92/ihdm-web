@@ -1,0 +1,33 @@
+.more__info {
+    /* height: 50px; */
+    padding: 15px 10px;
+    width: 100%;
+    margin: 10px 0;
+    background-color: lightslategray;
+    color: white;
+}
+
+.more__info>h3 {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.more__info__details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.more__info__details>a {
+    color: white;
+    text-decoration: none;
+}
+
+.more__info__details>a:hover {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.more__info__items {
+    margin: 5px;
+}
