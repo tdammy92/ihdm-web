@@ -8,6 +8,9 @@ import Contact from './components/pages/Contact/Contact';
 import About from './components/pages/About/About';
 import Member from './components/pages/Member/Member';
 import Register from './components/pages/Register/Register';
+import Certification from './components/pages/Certification/Certification';
+import Exam from './components/pages/Examination/Exam';
+import Nysc from './components/pages/Nysc/Nysc';
 
 function App() {
   return (
@@ -19,6 +22,9 @@ function App() {
           <Route path='/about' component={About} />
           <Route path='/contact' component={Contact} />
           <Route path='/member' component={Member} />
+          <Route path='/certification' component={Certification} />
+          <Route path='/examination' component={Exam} />
+          <Route path='/nysc' component={Nysc} />
           <Route path='/register' component={Register} />
         </Switch>
         <Footer />

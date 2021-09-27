@@ -12,8 +12,6 @@ import PhoneCallbackIcon from "@mui/icons-material/PhoneCallback";
 
 import CallIcon from "@mui/icons-material/Call";
 
-
-
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -468,15 +466,15 @@ export default function Contact() {
 					</Container>
 
 					<Container>
-          <hr  className='LongLIne'/>
-						
-            <div className='bank__details' id='bankDetails'>
+						<hr className='LongLIne' />
+
+						<div className='bank__details' id='bankDetails'>
 							<h3>IHDM Accountant Details</h3>
 
 							<p>
 								Account Name:
 								<strong>
-								Institute of Humanitarian and Disaster Management
+									Institute of Humanitarian and Disaster Management
 								</strong>
 							</p>
 							<p>
