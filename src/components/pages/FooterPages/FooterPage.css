@@ -1,0 +1,262 @@
+.career__container {
+    margin: 15px 5px;
+}
+
+.career__items {
+    margin: 20px 5px;
+}
+
+.career__items>h4 {
+    padding: 5px;
+    color: #03256C;
+}
+
+.career__items>p {
+    line-height: 2;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 10px;
+}
+
+.career__items__list {
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+.career__items__list>h5 {
+    padding: 5px;
+    color: #03256C;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.career__items__list>p {
+    margin-left: 10px;
+    line-height: 1.5;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.career__items__list>ol {
+    margin-left: 10px;
+    list-style-type: lower-roman;
+}
+
+.career__items__list>ol>li {
+    line-height: 1.5;
+    padding: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* media styling */
+
+.media__container {
+    margin: 15px 5px;
+}
+
+.media__items {
+    margin-top: 10px;
+}
+
+.media__items>h4 {
+    color: #03256C;
+}
+
+.media__image {
+    margin: 15px;
+    display: flex;
+    /* justify-content:; */
+    align-items: center;
+}
+
+.ico {
+    font-size: 50px;
+    color: #03256C;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.media__paragraph {
+    margin: 10px 5px;
+}
+
+.media__paragraph>p {
+    line-height: 2;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 4px;
+}
+
+.duration {
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.duration>p {
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+}
+
+
+/* styles for projects page */
+
+.project__container {
+    margin: 10px 5px;
+}
+
+.project__item {
+    margin-top: 10px;
+}
+
+.project__item>h4 {
+    margin: 5px;
+    color: #03256C;
+}
+
+.project__item>p {
+    line-height: 2;
+    padding: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.project__item>ol {
+    margin-left: 10px;
+    list-style-type: lower-alpha;
+}
+
+.project__item>ol>li {
+    line-height: 1.5;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 5px;
+}
+
+
+/* license styling */
+
+.license__container {
+    margin-top: 20px;
+}
+
+.license__item {
+    margin: 10px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.license__item>.fas {
+    color: #03256C;
+    font-size: 70px;
+}
+
+.license__news {
+    display: flex;
+    margin: 15px 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.license__news>p {
+    font-size: 20px;
+    color: #03256C;
+}
+
+.license__news>.far {
+    color: #03256C;
+    font-size: 30px;
+    margin-left: 5px;
+}
+
+.license__question {
+    width: auto;
+}
+
+.license__question>p {
+    color: #03256C;
+    line-height: 2;
+}
+
+.license__paragraphy {
+    margin: 10px 6px;
+}
+
+.license__paragraphy>p {
+    padding: 5px;
+    line-height: 2;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.license__paragraphy>h5 {
+    color: #03256C;
+}
+
+.license__paragraphy>ol {
+    list-style-type: lower-roman;
+    margin-left: 10px;
+}
+
+.license__paragraphy>ol>li {
+    line-height: 1.5;
+    padding: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* thematic area styling */
+
+.th__container {
+    margin: 20px 10px;
+}
+
+.th__container>ol {
+    margin-left: 10px;
+    list-style-type: lower-roman;
+}
+
+.th__container>ol>li {
+    line-height: 1.5;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 5px;
+}
+
+
+/* Human capacity styling */
+
+.hcb__container {
+    margin: 20px 10px;
+}
+
+.hcb__items>h4 {
+    color: #03256C;
+    margin: 10px 0;
+}
+
+.hcb__items {
+    margin: 10px 0;
+}
+
+.hcb__items>p {
+    line-height: 2;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 5px;
+}
+
+.hcb__items>ol {
+    list-style-type: lower-alpha;
+    margin-left: 10px;
+}
+
+.hcb__items>ol>li {
+    line-height: 1.5;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 10px;
+}
+
+.hcb__items>ul {
+    list-style-type: none;
+    margin-left: 10px;
+}
+
+.hcb__items>ul>li {
+    line-height: 1.5;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: 10px;
+}

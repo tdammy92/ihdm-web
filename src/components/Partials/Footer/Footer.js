@@ -11,12 +11,13 @@ function Footer() {
         <div className='footer-link-wrapper'>
           <div className='footer-link-items'>
             
-            <Link to='/register'>Register</Link>
             <Link to='/about'>About Us</Link>
-            <Link to='/'>Contact Us</Link>
-            <Link to='/'>Membership</Link>
-            <Link to='/'>Certification</Link>
-            <Link to='/'>Examination</Link>
+            <Link to='/contact'>Contact Us</Link>
+            <Link to='/nysc'>Nysc</Link>
+            <Link to='/register'>Register</Link>
+            <Link to='/membership'>Membership</Link>
+            <Link to='/certification'>Certification</Link>
+            <Link to='/examination'>Examination</Link>
           </div>
           <div className='footer-link-items'>
             {/* <h2>Contact Us</h2>
@@ -36,10 +37,12 @@ function Footer() {
           </div>  */}
           <div className='footer-link-items'>
             {/* <h2>Socials</h2> */}
-            <Link to='/'>Career</Link>
-            <Link to='/'>Media</Link>
-            <Link to='/'>Projects</Link>
-            <Link to='/'>License</Link>
+            <Link to='/career'>Career</Link>
+            <Link to='/media'>Media</Link>
+            <Link to='/project'>Projects</Link>
+            <Link to='/license'>License</Link>
+            <Link to='/th'>Thematic Areas</Link>
+            <Link to='/hcb'>Human Capacity Building</Link>
          
           </div>
         </div>
