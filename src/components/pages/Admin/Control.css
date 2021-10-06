@@ -1,0 +1,113 @@
+.login__container {
+    margin: 40px 10px;
+}
+
+.input__item {
+    margin: 20px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* admin dashboard styling */
+
+.dashboard__container {
+    display: flex;
+    max-width: 700px;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboard__items {
+    width: 300px;
+    height: 150px;
+    text-decoration: none;
+    margin: 20px 10px;
+    /* border: 1px solid red; */
+}
+
+.dasboard__list {
+    color: #123e9e;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dasboard__list:hover {
+    color: #03256C;
+}
+
+.dasboard__list>.fas {
+    font-size: 2rem;
+}
+
+.recent__table__container {
+    max-width: 80%;
+}
+
+.table__title {
+    color: #03256C;
+    font-size: larger;
+    padding: 10px 5px;
+}
+
+
+/* page for portal */
+
+.filter__container {
+    margin: 10px;
+    min-width: 300px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.filter__items {
+    margin: 5px;
+}
+
+
+/* styles for  form details view */
+
+.form__details {
+    margin: 20px 10px;
+}
+
+
+/* .form__details>h3 {
+    padding: 10px;
+    text-align: center;
+    color: #03256C;
+    text-decoration: underline;
+} */
+
+.controls__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width:420px) {
+    .dashboard__container {
+        display: flex;
+        max-width: 300px;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .dashboard__items {
+        width: 150px;
+        height: 100px;
+        text-decoration: none;
+        margin: 20px 10px;
+        /* border: 1px solid red; */
+    }
+    .recent__table__container {
+        max-width: 100%;
+    }
+}

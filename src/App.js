@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import Navbar from './components/Partials/Nav/Navbar';
 import Footer from './components/Partials/Footer/Footer'
 import './App.css';
@@ -17,8 +17,23 @@ import Projects from './components/pages/FooterPages/Projects';
 import License from './components/pages/FooterPages/License';
 import Th from './components/pages/FooterPages/Th';
 import Hcb from './components/pages/FooterPages/Hcb';
+import Login from './components/pages/Admin/Login';
+import Admin from './components/pages/Admin/Admin';
+import ProtectedRoute from './components/pages/ProtectedRoute';
+
+
+import {getUser} from './Store/Utility'
+import Portal from './components/pages/Admin/Portal';
+import FormView from './components/pages/Admin/FormView';
+
+
 
 function App() {
+
+  const [IsAdmin, setIsAdmin] = useState(getUser)
+
+ 
+ 
   return (
     <>
       <Router>
@@ -38,6 +53,14 @@ function App() {
           <Route path='/license' component={License} />
           <Route path='/th' component={Th} />
           <Route path='/hcb' component={Hcb} />
+          <Route path='/login' component={Login} />
+          <ProtectedRoute exact IsLoggedin={IsAdmin} Component={Admin} path='/admin'/>
+          
+          
+          <ProtectedRoute exact IsLoggedin={IsAdmin} Component={Portal} path='/portal'/>
+
+          <ProtectedRoute exact IsLoggedin={IsAdmin} Component={FormView} path='/portal/:id'/>
+         
         </Switch>
         <Footer />
       </Router>

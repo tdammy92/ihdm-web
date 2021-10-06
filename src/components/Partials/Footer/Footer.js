@@ -86,7 +86,7 @@ function Footer() {
             <Link
               className='social-icon-link twitter'
               to='/admin'
-              target='_blank'
+              
               aria-label='LinkedIn'
             >
              <i class="fas fa-user-lock"></i>

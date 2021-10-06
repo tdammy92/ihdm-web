@@ -1,6 +1,7 @@
 import React from "react";
 import "../../../App.css";
 // import Cards from "../../Partials/Cards/Cards";
+import Slider from './Slider'
 import HeroSection from "../../Partials/Hero/HeroSection";
 import Container from "@mui/material/Container";
 import "../Page.css";
@@ -18,14 +19,38 @@ import Image2 from "../../../Assets/image2.jpeg";
 import Image3 from "../../../Assets/image3.jpeg";
 import Image4 from "../../../Assets/image4.jpeg";
 
+
+
 import { useMediaQuery } from "react-responsive";
 
 // caoursel imports
 
-// import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
+
+
+// import "react-image-gallery/styles/css/image-gallery.css";
+// import ImageGallery from 'react-image-gallery';
+
+
+
+
+
+// const images = [
+// 	{
+// 	  original: {Image8},
+// 	  description: 'Custom class for slides & thumbnails',
+	
+// 	},
+// 	{
+// 		original: {Image9},
+// 		description: 'Custom class for slides & thumbnails',
+// 	},
+// 	{
+// 		original: {Image10},
+// 		description: 'Custom class for slides & thumbnails',
+// 	},
+//   ];
 
 function MobilSlider() {
 	return (
@@ -96,15 +121,14 @@ function DesktopSlider() {
 			<Carousel
 				infiniteLoop={true}
 				autoPlay={true}
-				showIndicators={true}
+				showIndicators={false}
 				showThumbs={false}
 				width='100%'
-		
-				
 			>
+				
 				<div className='slideImage__item'>
 					<img src={Image1} className='slideImage' alt='slide' />
-					<p >
+					<p>
 						Analysing Youth Restiveness, Electoral violence and security
 						challenges
 					</p>
@@ -120,11 +144,21 @@ function DesktopSlider() {
 					<img src={Image4} className='slideImage' alt='slide' />
 					<p>Advancing Women and youth in peace building</p>
 				</div>
-				
 			</Carousel>
 		</div>
 	);
 }
+
+
+
+
+
+
+
+
+
+
+
 
 function Home() {
 	const isMobile = useMediaQuery({ maxWidth: 960 });
@@ -199,8 +233,11 @@ function Home() {
 							</div>
 						</div>
 					</Container>{" "}
+					
+						<Slider/>
 				</section>{" "}
 			</div>
+			
 			<div className='register__cta'>
 				<div className='inner__cta'>
 					<h3>Want more information ? </h3>
@@ -309,14 +346,14 @@ function Home() {
 						</Grid>
 					</div>
 				</Container>
-				<Container>
+				{/* <Container>
 					<div className='slider__Container'>
 						{isMobile && <MobilSlider />}
 						{!isMobile && <DesktopSlider />}
+					</div> 
 
-	
-					</div>
-				</Container>
+				</Container> */}
+					{/* <ImageGallery items={images} /> */}
 			</div>
 		</>
 	);
