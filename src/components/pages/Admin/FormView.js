@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useReactToPrint } from "react-to-print";
+
+import Pdf from "react-to-pdf";
+
 import axios from "axios";
+import { Redirect } from "react-router";
 import { BaseApi, getUser } from "../../../Store/Utility";
 import { useParams } from "react-router-dom";
 import { Container } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-import Typography from '@mui/material/Typography';
+import Typography from "@mui/material/Typography";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -36,6 +41,12 @@ function FormView() {
 	const [Loader, setLoader] = useState(true);
 	const [Details, setDetails] = useState({});
 
+	const componentRef = useRef();
+
+	const handlePrint = useReactToPrint({
+		content: () => componentRef.current,
+	});
+
 	const user = getUser();
 	const { jwt } = user;
 
@@ -61,6 +72,9 @@ function FormView() {
 		getDetails();
 	}, [id]);
 
+	if (user?.user?.role.name !== "Admin") {
+		return <Redirect to='/' />;
+	}
 	const {
 		Fname,
 		Lname,
@@ -82,18 +96,27 @@ function FormView() {
 		<>
 			<div>
 				<section>
-					<Container>
-						<div className='form__details'>
-					
-							<Typography variant='h4' component='h4'  color='primary' textAlign='center'>
+					<Container >
+
+          <div className="form__view__container" >
+
+						<div className='form__details' ref={componentRef} >
+							<Typography
+								variant='h4'
+								component='h4'
+								mb='4'
+								color='primary'
+								textAlign='center'
+							>
 								{Lname} {Fname}
 							</Typography>
-							
+
 							<TableContainer component={Paper}>
 								<Table
 									sx={{ minWidth: 350 }}
 									size='small'
-									aria-label='a dense table'
+									aria-label='Form Details'
+
 								>
 									<TableHead>
 										<TableRow
@@ -168,13 +191,28 @@ function FormView() {
 								</Table>
 							</TableContainer>
 						</div>
+          </div>
 
 						<div className='controls__btn'>
+							
+
 							<Stack direction='row' spacing={2}>
-								<Button variant='outlined' startIcon={<PictureAsPdfIcon />}>
+								
+                
+              <Pdf targetRef={componentRef} filename={`${Fname} ${Lname}`}>
+								{({ toPdf }) => <Button onClick={toPdf} variant='outlined' startIcon={<PictureAsPdfIcon />}>
 									PDF
-								</Button>
-								<Button variant='contained' endIcon={<LocalPrintshopIcon />}>
+								</Button>}
+							</Pdf>
+                
+
+
+
+								<Button
+									onClick={handlePrint}
+									variant='contained'
+									endIcon={<LocalPrintshopIcon />}
+								>
 									PRINT
 								</Button>
 							</Stack>

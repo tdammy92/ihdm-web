@@ -74,17 +74,19 @@
 
 /* styles for  form details view */
 
-.form__details {
-    margin: 20px 10px;
+.form__view__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 1500px;
 }
 
-
-/* .form__details>h3 {
-    padding: 10px;
-    text-align: center;
-    color: #03256C;
-    text-decoration: underline;
-} */
+.form__details {
+    align-self: center;
+    margin: 15px 10px;
+    /* max-width: 950px; */
+    padding: 20px;
+}
 
 .controls__btn {
     display: flex;
