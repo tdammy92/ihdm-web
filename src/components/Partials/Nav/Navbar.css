@@ -127,9 +127,10 @@
     }
     .nav-links {
         text-align: center;
-        padding: 2rem;
+        padding: .4rem;
         width: 100%;
         display: table;
+        border-bottom: 1px dotted white;
     }
     .nav-links:hover {
         background-color: #fff;
@@ -171,10 +172,10 @@
         border-radius: 4px;
         width: 80%;
         text-decoration: none;
-        font-size: 1.5rem;
+        font-size: 1rem;
         background-color: transparent;
         color: #fff;
-        padding: 14px 20px;
+        padding: 10px 20px;
         border: 1px solid #fff;
         transition: all 0.3s ease-out;
     }
