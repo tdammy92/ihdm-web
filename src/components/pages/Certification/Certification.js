@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import "./Certification.css";
 import PageHero from "../../Partials/Hero/PageHero";
 import HeroImage from "../../../Assets/Certified.jpg";
@@ -7,6 +7,11 @@ import { Button } from "../../Partials/Button/Button";
 import { Container } from "@mui/material";
 
 function Certification() {
+
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
 	return (
 		<>
 			<PageHero

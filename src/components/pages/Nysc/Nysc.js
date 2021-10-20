@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import {Link} from 'react-router-dom'
 import PageHero from "../../Partials/Hero/PageHero";
 import { Button } from "../../Partials/Button/Button";
@@ -12,6 +12,10 @@ import "./Nysc.css";
 import "../Examination/Exam.css";
 
 function Nysc() {
+
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 	return (
 		<>
 			<PageHero img={HeroImage} title='NYSC' subtitle='Nysc Scheme' />

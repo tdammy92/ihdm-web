@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import PageHero from "../../Partials/Hero/PageHero";
@@ -17,6 +17,10 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 export default function Member() {
+
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 	return (
 		<>
 			<PageHero

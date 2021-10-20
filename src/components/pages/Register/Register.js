@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import axios from 'axios'
-import { useForm } from 'react-hook-form';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useForm } from "react-hook-form";
 import "../../../App.css";
 
-import {BaseApi} from '../../../Store/Utility'
+import { BaseApi, types } from "../../../Store/Utility";
 
 import { Container } from "@mui/material";
 
-// import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
@@ -32,6 +31,8 @@ import InputLabel from "@mui/material/InputLabel";
 
 import FormControl from "@mui/material/FormControl";
 import ListItemText from "@mui/material/ListItemText";
+
+import { useAlert } from "react-alert";
 
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -97,6 +98,7 @@ const Diploma = [
 	"Diploma in Water Sanitation and Hygiene (WASH)",
 	"Diploma in Financial Management in NGOs",
 	"Diploma in Environment and Sustainable Development",
+	"Diploma in Occupational Health and Safety Management",
 ];
 
 const PgdList = [
@@ -110,6 +112,7 @@ const PgdList = [
 	"PGD Diploma in Human Resource Management",
 	"PGD Diploma in Program Management",
 	"PGD Diploma in Financial Management",
+	"PGD Diploma in Occupational Health and Safety Management",
 ];
 
 const Courses = [
@@ -126,56 +129,57 @@ const Courses = [
 	"Waste and Environmental Management",
 	"Education in Emergencies",
 ];
+const Membership = [
+	"Student Member (SiHDM)",
+	"Affiliate Member (AFiHDM)",
+	"Associate Member (AiHDM)",
+	"Full Member (MiHDM)",
+	"Fellow Member (FiHDM)",
+];
 
 export default function Register() {
 	const [Loader, setLoader] = useState(false);
 	const [accept, setAccept] = useState(false);
 
+	const alert = useAlert();
 
-	const { register, handleSubmit, watch, formState: { errors } } = useForm();
-
-	const [Error, setError] = useState({status:false,message:""})
+	// const {
+	// 	register,
+	// 	handleSubmit,
+	// 	watch,
+	// 	formState: { errors },
+	// } = useForm();
 
 	const [FirstName, setFirstName] = useState("");
 	const [LastName, setLastName] = useState("");
 	const [Phone, setPhone] = useState("");
 	const [Email, setEmail] = useState("");
-
 	const [Address, setAddress] = useState("");
-
 	const [NigerState, setNigerState] = useState("Abuja(FCT)");
-	const ChangeNigeState = (event) => {
-		setNigerState(event.target.value);
-	};
-
 	const [StateCode, setStateCode] = useState("");
 
 	const [Spec, setSpec] = useState("Human Resource Management");
-	const changeSpec = (event) => {
-		setSpec(event.target.value);
-	};
 
 	const [FirstInst, setFirstInst] = useState("");
-	const [SecondInst, setSecondInst] = useState("");
-
 	// first unstitution date
 	const [Date1, setDate1] = useState(new Date());
 
-	const DateChange1 = (newValue) => {
-		setDate1(newValue);
-	};
-
+	const [SecondInst, setSecondInst] = useState("");
 	// second institution date
 	const [Date2, setDate2] = useState(new Date());
 
-	const DateChange2 = (newValue) => {
-		setDate2(newValue);
-	};
+	// code for working experience
+
+	const [currentRole, setcurrentRole] = useState("");
+	const [currentOrg, setcurrentOrg] = useState("");
+	const [DateJoind1, setDateJoind1] = useState(new Date());
+
+	const [PastRole, setPastRole] = useState("");
+	const [PastOrg, setPastOrg] = useState("");
+	const [DateJoind2, setDateJoind2] = useState(new Date());
+	const [DateLeft2, setDateLeft2] = useState(new Date());
 
 	const [Diplom, setDiplom] = useState("Diploma in Human Resource Management");
-	const changeDiploma = (event) => {
-		setDiplom(event.target.value);
-	};
 
 	// pgd select checkbox code
 	const ITEM_HEIGHT = 40;
@@ -199,71 +203,106 @@ export default function Register() {
 			// On autofill we get a the stringified value.
 			typeof value === "string" ? value.split(",") : value
 		);
+
+		
 	};
 
+	const [Memba, setMemba] = useState("Student Member (SiHDM)");
+
 	function ResetInput() {
-		setFirstName('');
-		setLastName('');
-		setPhone('');
-		setEmail('');
-		setAddress('');
+		setFirstName("");
+		setLastName("");
+		setPhone("");
+		setEmail("");
+		setAddress("");
 		setNigerState("Abuja(FCT)");
-		setStateCode('');
+		setStateCode("");
 		setSpec("Human Resource Management");
-		setFirstInst('');
-		setSecondInst('');
-		setDate1("2016-08-18T21:11:54");
-		setDate2("2021-08-18T21:11:54");
+		setFirstInst("");
+		setSecondInst("");
+		setDate1(new Date());
+		setDate2(new Date());
 		setDiplom("Diploma in Human Resource Management");
 		setPgd([]);
-		setAccept(false)
+		setAccept(false);
+		setcurrentRole("");
+		setcurrentOrg("");
+		setDateJoind1(new Date());
+		setPastRole("");
+		setPastOrg("");
+		setDateJoind2(new Date());
+		setDateLeft2(new Date());
+		setMemba("Student Member (SiHDM)");
 	}
 
-	// function Validate(e) {
-		
+	function submitForm() {
+		const details = {
+			Fname: FirstName,
+			phone: Phone,
+			Lname: LastName,
+			email: Email,
+			address: Address,
+			state: NigerState,
+			stateCode: StateCode,
+			AreaSpec: Spec,
+			FirstInst: FirstInst,
+			DateCompleted1: Date1,
+			SecondInst: SecondInst,
+			DateCompleted2: Date2,
+			DiplomaC: Diplom,
+			PgdC: Pgd.toString(),
+			currentRole: currentRole,
+			currentOrg: currentOrg,
+			DateJoinedCurrent: DateJoind1,
+			PastRole: PastRole,
+			PastOrg: PastOrg,
+			DateJoinedPast: DateJoind2,
+			DateLeftPast: DateLeft2,
+			membershipCat: Memba,
+		};
 
-	// }
+		if ((FirstName === "") || (LastName === "") || (Phone === "")) {
+			alert.show(`Please fill all important fileds`, {
+				title: "Incomplete Details",
+				type: types.ERROR,
+			});
+		} else {
+			setLoader(true);
 
-	const details = {
-		Fname:FirstName,
-		Lname:LastName,
-		phone:Phone,
-		email:Email,
-		address:Address,
-		state:NigerState,
-		stateCode:StateCode,
-		AreaSpec:Spec,
-		FirstInst:FirstInst,
-		DateCompleted1:Date1,
-		SecondInst:SecondInst,
-		DateCompleted2:Date2,
-		DiplomaC:Diplom,
-		PgdC:Pgd.toString()
+			
+
+			axios
+				.post(`${BaseApi}/registers`, details)
+				.then((res) => {
+					console.log(res.data);
+
+					if (res.status === 200) {
+						alert.show(
+							`Dear ${FirstName} ${LastName} your form has been submitted`,
+							{
+								title: "Notification !!!",
+								type: types.SUCCESS,
+							}
+						);
+						ResetInput();
+					}
+					setLoader(false);
+				})
+				.catch((error) => {
+					console.log(error.message);
+					setLoader(false);
+
+					alert.show(`${error.message}`, {
+						title: "Oops !!!",
+						type: types.ERROR,
+					});
+				});
+		}
 	}
 
-	function Onsubmit() {
-		
-
-		setLoader(true)
-
-		axios.post(`${BaseApi}/registers`, details)
-		.then(res=>{
-			console.log(res.data)
-
-			if(res.status === 200){
-
-				ResetInput()
-			}
-			setLoader(false)
-		})
-		.catch((error)=>{
-			console.log(error.message)
-			setLoader(false)
-		})
-
-
-	}
-
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 
 	return (
 		<>
@@ -276,242 +315,502 @@ export default function Register() {
 
 						<Paper style={{ marginTop: "20px", padding: "5px" }}>
 							<div className='form__wrapper'>
-
-							<form action="">
-
-
-								<div className='form__container'>
-									<Typography variant='p' component='p' color='primary'  textAlign='center' marginTop='10px'>
-										Personal Information
-									</Typography>
-
-									<div className='form__items'>
-										<TextField
-											id='outlined-basic'
-											label='Firstname'
-											type='text'
-											placeholder='Chinedu'
-											value={FirstName}
-											onChange={(e)=>setFirstName(e.target.value)}
-											style={{ width: "300px", margin: "15px" }}
-											required
-											error={Error.status}
-											helperText={Error.message}
-										/>
-
-										<TextField
-											id='outlined-basic'
-											label='Lastname'
-											type='text'
-											placeholder='Ibrahim'
-											value={LastName}
-											onChange={(e)=>setLastName(e.target.value)}
-											style={{ width: "300px", margin: "15px" }}
-											required
-										/>
-
-										<PhoneInput
-											country={"ng"}
-											placeholder='07057210001'
-											value={Phone}
-											style={{ width: "300px", margin: "15px" }}
-											onChange={(phone) => setPhone(phone)}
-											required
-										/>
-
-										<TextField
-											id='outlined-basic'
-											label='Email'
-											type='email'
-											value={Email}
-											onChange={(e)=>setEmail(e.target.value)}
-											style={{ width: "300px", margin: "15px" }}
-											placeholder='chedu-Ibrahim@gmail.com'
-											required
-										/>
-
-										<TextField
-											id='outlined-multiline-static'
-											label='Address'
-											multiline
-											value={Address}
-											onChange={(e)=>setAddress(e.target.value)}
-											rows={4}
-											style={{ width: "300px", margin: "15px" }}
-											placeholder='Permernent Address'
-											required
-										/>
-
-										<TextField
-											id='outlined-select-currency'
-											select
-											label='Select'
-											value={NigerState}
-											onChange={ChangeNigeState}
-											helperText='Please select State of service'
-											style={{ width: "300px", margin: "15px" }}
-											required
-										>
-											{StateList.map((option) => (
-												<MenuItem key={option} value={option}>
-													{option}
-												</MenuItem>
-											))}
-										</TextField>
-
-										<TextField
-											style={{ width: "300px", margin: "15px" }}
-											id='outlined-basic'
-											label='State Code'
-											type='text'
-											value={StateCode}
-											onChange={(e)=>setStateCode(e.target.value)}
-											placeholder='LA/20B/4832'
-											required
-										/>
-									</div>
-									<Typography variant='p' component='p' color='primary' textAlign='center' marginTop='15px'>
-										Institution Attended/Date
-									</Typography>
-
-									<div className='form__items'>
-										<TextField
-											style={{ width: "300px", margin: "15px" }}
-											id='outlined-multiline-static'
-											label='First Instittution'
-											multiline
-											rows={2}
-											value={FirstInst}
-											onChange={(e)=>setFirstInst(e.target.value)}
-											placeholder='Enter your first instituition here'
-											required
-										/>
-
-										<LocalizationProvider dateAdapter={AdapterDateFns}>
-											<Stack spacing={3} style={{ width: "300px", margin: "15px" }}>
-												<MobileDatePicker
-													
-													label='Date Completed'
-													inputFormat='MM/dd/yyyy'
-													value={Date1}
-													onChange={DateChange1}
-													renderInput={(params) => <TextField {...params} />}
-												/>
-											</Stack>
-										</LocalizationProvider>
-
-										<TextField
-											style={{ width: "300px", margin: "15px" }}
-											id='outlined-multiline-static'
-											label='Second Instittution'
-											multiline
-											rows={2}
-											value={SecondInst}
-											onChange={(e)=>setSecondInst(e.target.value)}
-											placeholder='Enter your second instituition here'
-										/>
-
-										<LocalizationProvider dateAdapter={AdapterDateFns}>
-											<Stack spacing={3} style={{ width: "300px", margin: "15px" }}>
-												<MobileDatePicker
-												
-													label='Date Completed'
-													inputFormat='MM/dd/yyyy'
-													value={Date2}
-													onChange={DateChange2}
-													renderInput={(params) => <TextField {...params} />}
-												/>
-											</Stack>
-										</LocalizationProvider>
-									</div>
-									<Typography variant='p' component='p' color='primary' textAlign='center' marginTop='15px'>
-										Select Program
-									</Typography>
-									<div className='form__items'>
-										<TextField
-											id='outlined-select-currency'
-											select
-											label='Select'
-											value={Spec}
-											onChange={changeSpec}
-											helperText='Please select Area of specification'
-											style={{ width: "300px", margin: "15px" }}
-											required
-										>
-											{Courses.map((option) => (
-												<MenuItem key={option} value={option}>
-													{option}
-												</MenuItem>
-											))}
-										</TextField>
-
-										<TextField
-											id='outlined-select-currency'
-											select
-											label='Select'
-											value={Diplom}
-											onChange={changeDiploma}
-											helperText='Please select Diploma Course'
-											style={{ width: "300px", margin: "15px" }}
-										>
-											{Diploma.map((option) => (
-												<MenuItem key={option} value={option}>
-													{option}
-												</MenuItem>
-											))}
-										</TextField>
-
-										<FormControl sx={{ m: 1, width: 300 }}>
-											<InputLabel id='demo-multiple-checkbox-label'>
-												PGD
-											</InputLabel>
-											<Select
-												helperText='Please select Diploma Course'
-												labelId='demo-multiple-checkbox-label'
-												id='demo-multiple-checkbox'
-												multiple
-												value={Pgd}
-												onChange={PgdChange}
-												input={<OutlinedInput label='Tag' />}
-												renderValue={(selected) => selected.join(", ")}
-												MenuProps={MenuProps}
+								<form
+									action=''
+									// onSubmit={handleSubmit(submitForm)}
+								>
+									<div className='form__container'>
+										<div>
+											<Typography
+												variant='h6'
+												component='h6'
+												color='primary'
+												textAlign='center'
+												marginTop='10px'
 											>
-												{PgdList.map((name) => (
-													<MenuItem key={name} value={name}>
-														<Checkbox checked={Pgd.indexOf(name) > -1} />
-														<ListItemText primary={name} />
+												Personal Information
+											</Typography>
+
+											<span
+												style={{
+													fontSize: "12px",
+													color: "red",
+													textAlign: "center",
+													width: "100%",
+													fontFamily: "serif",
+													padding: "5px",
+													marginLeft: "6px",
+												}}
+											>
+												All *(asteriked) are important fileds
+											</span>
+										</div>
+
+										<div className='form__items'>
+											<TextField
+												id='outlined-basic'
+												label='Firstname'
+												type='text'
+												placeholder='Chinedu'
+												value={FirstName}
+												onChange={(e) => setFirstName(e.target.value)}
+												style={{ width: "300px", margin: "15px" }}
+												required
+												// name='Fname'
+												// {...register("Fname", { required: "First name is required" })}
+												// error={Boolean(errors.Fname)}
+												// helperText={errors.Fname?.message}
+											/>
+
+											<TextField
+												id='outlined-basic'
+												label='Lastname'
+												type='text'
+												placeholder='Ibrahim'
+												value={LastName}
+												onChange={(e) => setLastName(e.target.value)}
+												style={{ width: "300px", margin: "15px" }}
+												required
+												// name='Lname'
+												// {...register("Lname", { required: "Last name is required" })}
+												// error={Boolean(errors.Lname)}
+												// helperText={errors.Lname?.message}
+											/>
+
+											<PhoneInput
+												country={"ng"}
+												placeholder='07057210001'
+												value={Phone}
+												style={{ width: "300px", margin: "15px" }}
+												onChange={(phone) => setPhone(phone)}
+												required
+
+												// name='phone'
+												// {...register("Lname", { required: "Phone number is required" })}
+												// error={Boolean(errors.phone)}
+												// helperText={errors.phone?.message}
+											/>
+
+											<TextField
+												id='outlined-basic'
+												label='Email'
+												type='email'
+												value={Email}
+												onChange={(e) => setEmail(e.target.value)}
+												style={{ width: "300px", margin: "15px" }}
+												placeholder='chedu-Ibrahim@gmail.com'
+												required
+
+												// name='email'
+												// {...register("email", { required: "email is required" })}
+												// error={Boolean(errors.email)}
+												// helperText={errors.email?.message}
+											/>
+
+											<TextField
+												id='outlined-multiline-static'
+												label='Address'
+												multiline
+												value={Address}
+												onChange={(e) => setAddress(e.target.value)}
+												rows={4}
+												style={{ width: "300px", margin: "15px" }}
+												placeholder='Permernent Address'
+												required
+											/>
+
+											<TextField
+												id='outlined-select-currency'
+												select
+												label='Select'
+												value={NigerState}
+												onChange={(e) => setNigerState(e.target.value)}
+												helperText='Please select State of service'
+												style={{ width: "300px", margin: "15px" }}
+												required
+											>
+												{StateList.map((option) => (
+													<MenuItem key={option} value={option}>
+														{option}
 													</MenuItem>
 												))}
-											</Select>
-										</FormControl>
-									</div>
+											</TextField>
 
-									<div className='form__items'>
-										<div className='form__checkBox'>
-											<FormGroup>
-												<FormControlLabel
-													control={
-														<Checkbox
-															checked={accept}
-															onChange={(e) => setAccept(e.target.checked)}
-														/>
-													}
-													label='hereby declare that the information given in
+											<TextField
+												style={{ width: "300px", margin: "15px" }}
+												id='outlined-basic'
+												label='State Code'
+												type='text'
+												value={StateCode}
+												onChange={(e) => setStateCode(e.target.value)}
+												placeholder='LA/20B/4832'
+												required
+											/>
+										</div>
+										<Typography
+											variant='h6'
+											component='h6'
+											color='primary'
+											textAlign='center'
+											marginTop='15px'
+										>
+											Institution Attended/Date
+										</Typography>
+
+										<div className='form__items'>
+											<TextField
+												style={{ width: "300px", margin: "15px" }}
+												id='outlined-multiline-static'
+												label='First Instittution'
+												multiline
+												rows={2}
+												value={FirstInst}
+												onChange={(e) => setFirstInst(e.target.value)}
+												placeholder='Enter your first instituition here'
+												required
+											/>
+
+											<LocalizationProvider dateAdapter={AdapterDateFns}>
+												<Stack
+													spacing={3}
+													style={{ width: "300px", margin: "15px" }}
+												>
+													<MobileDatePicker
+														label='Date Completed'
+														inputFormat='MM/dd/yyyy'
+														value={Date1}
+														onChange={(value) => {
+															setDate1(value);
+														}}
+														renderInput={(params) => <TextField {...params} />}
+													/>
+												</Stack>
+											</LocalizationProvider>
+
+											<TextField
+												style={{ width: "300px", margin: "15px" }}
+												id='outlined-multiline-static'
+												label='Second Instittution'
+												multiline
+												rows={2}
+												value={SecondInst}
+												onChange={(e) => setSecondInst(e.target.value)}
+												placeholder='Enter your second instituition here'
+											/>
+
+											<LocalizationProvider dateAdapter={AdapterDateFns}>
+												<Stack
+													spacing={3}
+													style={{ width: "300px", margin: "15px" }}
+												>
+													<MobileDatePicker
+														label='Date Completed'
+														inputFormat='MM/dd/yyyy'
+														value={Date2}
+														onChange={(value) => setDate2(value)}
+														renderInput={(params) => <TextField {...params} />}
+													/>
+												</Stack>
+											</LocalizationProvider>
+										</div>
+
+										<div>
+											<Typography
+												variant='h6'
+												component='h6'
+												color='primary'
+												textAlign='center'
+												marginTop='10px'
+											>
+												Work History
+											</Typography>
+											<Typography
+												variant='p'
+												component='p'
+												color='primary'
+												textAlign='center'
+												marginTop='5px'
+											>
+												Current Role
+											</Typography>
+										</div>
+
+										<div className='form__items'>
+											<TextField
+												id='outlined-basic'
+												label='Job Title'
+												type='text'
+												placeholder='Software Engr'
+												value={currentRole}
+												onChange={(e) => setcurrentRole(e.target.value)}
+												style={{ width: "300px", margin: "15px" }}
+												required
+											/>
+											<TextField
+												id='outlined-basic'
+												label='Organization'
+												type='text'
+												placeholder='Opay'
+												value={currentOrg}
+												onChange={(e) => setcurrentOrg(e.target.value)}
+												style={{ width: "300px", margin: "15px" }}
+												required
+											/>
+
+											<LocalizationProvider dateAdapter={AdapterDateFns}>
+												<Stack
+													spacing={3}
+													style={{ width: "300px", margin: "15px" }}
+												>
+													<MobileDatePicker
+														label='Date Joined'
+														inputFormat='MM/dd/yyyy'
+														value={DateJoind1}
+														onChange={(value) => setDateJoind1(value)}
+														renderInput={(params) => <TextField {...params} />}
+													/>
+												</Stack>
+											</LocalizationProvider>
+										</div>
+										<div>
+											<Typography
+												variant='p'
+												component='p'
+												color='primary'
+												textAlign='center'
+												marginTop='5px'
+											>
+												Past Role
+											</Typography>
+										</div>
+
+										<div className='form__items'>
+											<TextField
+												id='outlined-basic'
+												label='Job Title'
+												type='text'
+												placeholder='Software Engr'
+												value={PastRole}
+												onChange={(e) => setPastRole(e.target.value)}
+												style={{ width: "300px", margin: "15px" }}
+												required
+											/>
+											<TextField
+												id='outlined-basic'
+												label='Organization'
+												type='text'
+												placeholder='Opay'
+												value={PastOrg}
+												onChange={(e) => setPastOrg(e.target.value)}
+												style={{ width: "300px", margin: "15px" }}
+												required
+											/>
+
+											<LocalizationProvider dateAdapter={AdapterDateFns}>
+												<Stack
+													spacing={3}
+													style={{ width: "300px", margin: "15px" }}
+												>
+													<MobileDatePicker
+														label='Date Joined'
+														inputFormat='MM/dd/yyyy'
+														value={DateJoind2}
+														onChange={(value) => setDateJoind2(value)}
+														renderInput={(params) => <TextField {...params} />}
+													/>
+												</Stack>
+											</LocalizationProvider>
+											<LocalizationProvider dateAdapter={AdapterDateFns}>
+												<Stack
+													spacing={3}
+													style={{ width: "300px", margin: "15px" }}
+												>
+													<MobileDatePicker
+														label='Date Ended'
+														inputFormat='MM/dd/yyyy'
+														value={DateLeft2}
+														onChange={(value) => setDateLeft2(value)}
+														renderInput={(params) => <TextField {...params} />}
+													/>
+												</Stack>
+											</LocalizationProvider>
+										</div>
+
+										<Typography
+											variant='h6'
+											component='h6'
+											color='primary'
+											textAlign='center'
+											marginTop='15px'
+										>
+											Select Program
+										</Typography>
+										<div className='form__items'>
+											<TextField
+												id='outlined-select-currency'
+												select
+												label='Select Specialization'
+												value={Spec}
+												onChange={(e) => setSpec(e.target.value)}
+												helperText='Select the Area of Specialization'
+												style={{ width: "300px", margin: "15px" }}
+												required
+											>
+												{Courses.map((option) => (
+													<MenuItem key={option} value={option}>
+														{option}
+													</MenuItem>
+												))}
+											</TextField>
+
+											<TextField
+												id='outlined-select-currency'
+												select
+												label='Select Diploma'
+												value={Diplom}
+												onChange={(e) => setDiplom(e.target.value)}
+												helperText='Please select Diploma Course'
+												style={{ width: "300px", margin: "15px" }}
+											>
+												{Diploma.map((option) => (
+													<MenuItem key={option} value={option}>
+														{option}
+													</MenuItem>
+												))}
+											</TextField>
+
+											{/* <FormControl sx={{ m: 1, width: 300 }}>
+												<InputLabel id='demo-multiple-checkbox-label'>
+													PGD
+												</InputLabel>
+												<Select
+													labelId='demo-multiple-checkbox-label'
+													id='demo-multiple-checkbox'
+													multiple
+													value={Pgd}
+													onChange={PgdChange}
+													input={<OutlinedInput label='Tag' />}
+													renderValue={(selected) => selected.join(", ")}
+													MenuProps={MenuProps}
+												>
+													{PgdList.map((name) => (
+														<MenuItem key={name} value={name}>
+															<Checkbox checked={Pgd.indexOf(name) > -1} />
+															<ListItemText primary={name} />
+														</MenuItem>
+
+														
+													))}
+												</Select>
+
+												<span
+													style={{
+														fontSize: "12px",
+														color: "#808080",
+														fontFamily: "serif",
+														padding: "5px",
+													}}
+												>
+													* Selecting more than one (1) PGD attracts additional
+													cost from the initial
+												</span>
+											</FormControl> */}
+
+											<FormControl sx={{ m: 1, width: 300 }}>
+												<InputLabel id='demo-multiple-name-label'>
+													PGD
+												</InputLabel>
+												<Select
+													labelId='demo-multiple-name-label'
+													id='demo-multiple-name'
+													multiple
+													value={Pgd}
+													onChange={PgdChange}
+													input={<OutlinedInput label='Name' />}
+													MenuProps={MenuProps}
+												>
+													{PgdList.map((name) => (
+														<MenuItem
+															key={name}
+															value={name}
+															
+														>
+															{name}
+														</MenuItem>
+													))}
+												</Select>
+											</FormControl>
+										</div>
+										<Typography
+											variant='h6'
+											component='h6'
+											color='primary'
+											textAlign='center'
+											marginTop='15px'
+										>
+											Membership Category
+										</Typography>
+										<div className='form__items'>
+											<TextField
+												id='outlined-select-currency'
+												select
+												label='Select membership'
+												value={Memba}
+												onChange={(e) => setMemba(e.target.value)}
+												helperText='Select Membership category according to your qualification.
+'
+												style={{ width: "300px", margin: "15px" }}
+												required
+											>
+												{Membership.map((option) => (
+													<MenuItem key={option} value={option}>
+														{option}
+													</MenuItem>
+												))}
+											</TextField>
+										</div>
+
+										<div className='form__items'>
+											<div className='form__checkBox'>
+												<FormGroup>
+													<FormControlLabel
+														control={
+															<Checkbox
+																checked={accept}
+																onChange={(e) => setAccept(e.target.checked)}
+															/>
+														}
+														label='I hereby declare that the information given in
 													this application is true and correct
 													 to the best of my knowledge and belief.'
-												/>
-											</FormGroup>
+													/>
+												</FormGroup>
+											</div>
 										</div>
 									</div>
-								</div>
-							</form>
-
+								</form>
+								<span
+									style={{
+										fontSize: "12px",
+										color: "red",
+										textAlign: "center",
+										width: "100%",
+										fontFamily: "serif",
+										padding: "5px",
+										marginBottom: "5px",
+									}}
+								>
+									INSTRUCTION: Note that, filling online form, without paying
+									the necessary fee, will not be treated.
+								</span>
 								<Stack direction='row' spacing={2}>
 									<Button
 										variant='outlined'
 										disabled={!accept}
 										endIcon={<SendIcon />}
-										onClick={Onsubmit}
+										onClick={submitForm}
+										type='submit'
+										style={{ marginBottom: "20px" }}
 									>
 										Submit
 									</Button>

@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 
 
 import { Container } from "@mui/material";
@@ -11,6 +11,10 @@ import '../Page.css'
 import './FooterPage.css'
 
 function Hcb() {
+
+    useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 	return (
 		<>
 			<PageHero img={HeroImage} title='HUMAN CAPACITY BUILDING' subtitle='' />

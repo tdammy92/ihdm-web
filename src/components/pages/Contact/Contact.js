@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import "../../../App.css";
 import "./Contact.css";
 import PageHero from "../../Partials/Hero/PageHero";
@@ -191,6 +191,11 @@ const MobileTable = () => {
 export default function Contact() {
 	const isMobile = useMediaQuery({ maxWidth: 960 });
 
+
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+	
 	return (
 		<>
 			{" "}

@@ -1,20 +1,31 @@
 const BaseApi = 'https://ihdm-api.herokuapp.com'
+// const BaseApi = 'http://localhost:1337'
 
 
-
-
-function getUser() {
-
-    const ls = JSON.parse(localStorage.getItem('admin'))
+ const types = {
+    INFO: 'info',
+    SUCCESS: 'success',
+    ERROR: 'error'
+  }
   
-    if (ls) {
-        return ls
-    } else {
-        return null
-    }
+ const transitions = {
+    FADE: 'fade',
+    SCALE: 'scale'
+  }
+
+
+// function getUser() {
+
+//     const ls = JSON.parse(localStorage.getItem('admin'))
+  
+//     if (ls) {
+//         return ls
+//     } else {
+//         return null
+//     }
     
   
   
-  }
+//   }
 
-export { BaseApi, getUser};
+export { BaseApi, types,transitions};

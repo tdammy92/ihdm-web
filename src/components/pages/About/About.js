@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import Container from '@mui/material/Container';
 import PageHero from '../../Partials/Hero/PageHero';
 import HeroImage from '../../../Assets/AboutUs.jpg';
@@ -8,6 +8,11 @@ import '../Page.css'
 import './About.css'
 
 export default function About() {
+
+
+    useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 
     return <>
 

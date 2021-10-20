@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import PageHero from "../../Partials/Hero/PageHero";
 
 import HeroImage from '../../../Assets/exam2.jpg'
@@ -9,6 +9,11 @@ import "./Exam.css";
 import "../Page.css";
 
 function Exam() {
+
+    useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
 	return (
 		<>
 			<PageHero img={HeroImage} title='Examination' subtitle='Take an Exam today..!!!' />

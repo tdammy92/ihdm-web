@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 
 import { Container } from "@mui/material";
 
@@ -8,6 +8,9 @@ import "../Page.css";
 import "./FooterPage.css";
 
 function Th() {
+    useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 	return (
 		<>
 			<PageHero img={HeroImage} title='THEMATIC' subtitle='' />
@@ -30,7 +33,7 @@ function Th() {
                                 <li>Program Management</li>
                                 <li>Procurement and Humanitarian Logistics Supply Chain Management</li>
                                 <li>Human Resource Management</li>
-                                <li>Disaster Reduction and Management</li>
+                                <li>Disaster Risk Reduction and Waste Management</li>
                                 <li>Financial Management for NGOs</li>
                                 <li>Early Childhood Care Development </li>
                                 <li>Occupational Health and Safety Management</li>

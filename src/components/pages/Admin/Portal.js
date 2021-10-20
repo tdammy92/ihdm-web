@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Paper } from "@mui/material";
 import { Container } from "@mui/material";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useHistory, withRouter } from "react-router-dom";
 
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -12,6 +12,13 @@ import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
+import Divider from "@mui/material/Divider";
+
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormHelperText from "@mui/material/FormHelperText";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 import { makeStyles } from "@mui/styles";
 import Table from "@mui/material/Table";
@@ -24,23 +31,33 @@ import TableRow from "@mui/material/TableRow";
 import Pdf from "react-to-pdf";
 import { useReactToPrint } from "react-to-print";
 
+import { useMediaQuery } from "react-responsive";
+
+import ReactHTMLTableToExcel from "react-html-table-to-excel";
+
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
-import ListAltIcon from '@mui/icons-material/ListAlt';
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import SearchIcon from "@mui/icons-material/Search";
 
-
+import Store from "../../../Store/Context/Store";
+import "./Control.css";
 
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import axios from "axios";
-
 import { BaseApi } from "../../../Store/Utility";
-import { getUser } from "../../../Store/Utility";
+
+import ReactExport from "react-data-export";
+
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+// const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 function Portal() {
 	const [Loader, setLoader] = useState(false);
-	const [value, setValue] = useState(new Date());
+
 	const useStyles = makeStyles({
 		root: {
 			width: "100%",
@@ -52,6 +69,7 @@ function Portal() {
 
 	const classes = useStyles();
 	const componentRef = useRef();
+	const history = useHistory();
 
 	const [Registerd, setRegisterd] = useState([]);
 	const [page, setPage] = useState(0);
@@ -66,12 +84,75 @@ function Portal() {
 		setPage(0);
 	};
 
-	const user = getUser();
-	const { jwt } = user;
+	const { User } = Store();
+	const { jwt, user } = User;
+
+	const isMobile = useMediaQuery({ maxWidth: 960 });
+
+	// ?firstName_eq=John
+	// ?createdAt_gte=${todaysDate}
+
+	const [SearchBy, setSearchBy] = useState("First Name");
+	const [Dae, setDae] = useState(new Date());
+	const [SearchValue, setSearchValue] = useState("");
+
+	function ResetForm() {
+		setSearchBy("First Name");
+		setSearchValue("");
+		setDae(new Date());
+	}
+
+	function ApiRequest(url) {
+		setLoader(true);
+		axios
+			.get(`${url}`, {
+				headers: { Authorization: `Bearer ${jwt}` },
+			})
+			.then((res) => {
+				setRegisterd(res.data);
+				ResetForm();
+				setLoader(false);
+			})
+			.catch((error) => {
+				console.log(error.message);
+				setLoader(false);
+			});
+	}
+
+	function Filter() {
+		if (SearchBy === "Fname") {
+			const url = `${BaseApi}/registers?Fname_eq=${SearchValue}&_sort=createdAt:DESC&`;
+
+			ApiRequest(url);
+		} else if (SearchBy === "Lname") {
+			const url = `${BaseApi}/registers?Lname_eq=${SearchValue}&_sort=createdAt:DESC&`;
+
+			ApiRequest(url);
+		} else if (SearchBy === "State") {
+			const url = `${BaseApi}/registers?state=${SearchValue}&_sort=createdAt:DESC&`;
+
+			ApiRequest(url);
+		} else if (SearchBy === "Phone") {
+			const url = `${BaseApi}/registers?phone=${SearchValue}&_sort=createdAt:DESC&`;
+
+			ApiRequest(url);
+		}else if(SearchBy === "StateCode"){
+			const url = `${BaseApi}/registers?stateCode=${SearchValue}&_sort=createdAt:DESC&`;
+
+			ApiRequest(url);
+
+		} else if (SearchBy === "Date") {
+			const SearchDate = Dae.toISOString().split("T")[0];
+			console.log(SearchDate);
+			const url = `${BaseApi}/registers?createdAt=${SearchDate}&_sort=createdAt:DESC&`;
+
+			ApiRequest(url);
+		}
+	}
 
 	async function getTotalRegisterd() {
 		axios
-			.get(`${BaseApi}/registers?_sort=createdAt:DESC`, {
+			.get(`${BaseApi}/registers?_sort=createdAt:DESC&`, {
 				headers: { Authorization: `Bearer ${jwt}` },
 			})
 			.then((res) => {
@@ -88,11 +169,69 @@ function Portal() {
 
 	useEffect(() => {
 		getTotalRegisterd();
+		window.scrollTo(0, 0);
 	}, []);
 
-	if (user?.user?.role.name !== "Admin") {
-		return <Redirect to='/' />;
+	const ExcelData = [
+		{
+			columns: [
+				{
+					title: "FIRST NAME",
+					style: { font: { sz: "14", bold: true } },
+					width: { wpx: 125 },
+				},
+				{
+					title: "LAST NAME",
+					style: { font: { sz: "14", bold: true } },
+					width: { wpx: 125 },
+				},
+				{
+					title: "PHONE",
+					style: { font: { sz: "14", bold: true } },
+					width: { wpx: 125 },
+				},
+				{
+					title: "EMAIL",
+					style: { font: { sz: "14", bold: true } },
+					width: { wpx: 125 },
+				},
+				{
+					title: "STATE",
+					style: { font: { sz: "14", bold: true } },
+					width: { wpx: 125 },
+				},
+				{
+					title: "STATE CODE",
+					style: { font: { sz: "14", bold: true } },
+					width: { wpx: 125 },
+				},
+				{
+					title: "DATE REGISTERED",
+					style: { font: { sz: "14", bold: true } },
+					width: { wpx: 125 },
+				},
+			],
+			data: Registerd.map((data) => [
+				{ value: data.Fname, style: { font: { sz: "12" } } },
+				{ value: data.Lname, style: { font: { sz: "12" } } },
+				{ value: data.phone, style: { font: { sz: "12" } } },
+				{ value: data.email, style: { font: { sz: "12" } } },
+				{ value: data.state, style: { font: { sz: "12" } } },
+				{ value: data.stateCode, style: { font: { sz: "12" } } },
+				{
+					value: new Date(data.createdAt).toDateString(),
+					style: { font: { sz: "12" } },
+				},
+			]),
+		},
+	];
+
+	if (user?.role?.name !== "Admin") {
+		return <Redirect to='/login' />;
 	}
+
+	const todaysDate = new Date().toISOString().split("T")[0];
+
 	return (
 		<>
 			<div>
@@ -101,33 +240,75 @@ function Portal() {
 						<Paper elevation={2}>
 							<div className='filter__container'>
 								<div className='filter__items'>
-									<TextField
-										id='outlined-search'
-										label='Search field'
-										type='search'
-									/>
-								</div>
+									<Stack
+										direction={isMobile ? "column" : "row"}
+										divider={<Divider orientation='vertical' flexItem />}
+										justifyContent='center'
+										alignItems='center'
+										spacing={2}
+										mt={1}
+									>
+										<FormControl sx={{ m: 1, minWidth: 200 }}>
+											<InputLabel id='demo-simple-select-helper-label'>
+												Search By
+											</InputLabel>
+											<Select
+												labelId='demo-simple-select-helper-label'
+												id='demo-simple-select-helper'
+												value={SearchBy}
+												label='Search-BY'
+												onChange={(e) => setSearchBy(e.target.value)}
+											>
+												<MenuItem value='Fname'>First Name</MenuItem>
+												<MenuItem value='Lname'>Last Name</MenuItem>
+												<MenuItem value='Phone'>Phone No</MenuItem>
+												<MenuItem value='State'>State</MenuItem>
+												<MenuItem value='StateCode'>State Code</MenuItem>
+												{/* <MenuItem value='Date'>Date</MenuItem> */}
+											</Select>
+											{/* <FormHelperText>With label + helper text</FormHelperText> */}
+										</FormControl>
 
-								<div className='filter__items'>
-									<LocalizationProvider dateAdapter={AdapterDateFns}>
-										<Stack spacing={1}>
-											<MobileDatePicker
-												label='Date'
-												value={value}
-												onChange={(newValue) => {
-													setValue(newValue);
-												}}
-												renderInput={(params) => <TextField {...params} />}
+										{SearchBy === "Date" ? (
+											<LocalizationProvider dateAdapter={AdapterDateFns}>
+												<Stack spacing={1}>
+													<MobileDatePicker
+														label='Date'
+														value={Dae}
+														inputFormat='dd/MM/yyyy'
+														onChange={(newValue) => setDae(newValue)}
+														renderInput={(params) => <TextField {...params} />}
+													/>
+												</Stack>
+											</LocalizationProvider>
+										) : (
+											<TextField
+												id='outlined-search'
+												label='Search field'
+												type='text'
+												value={SearchValue}
+												onChange={(e) => setSearchValue(e.target.value)}
 											/>
-										</Stack>
-									</LocalizationProvider>
-								</div>
+										)}
 
+										<Button
+											type='button'
+											variant='contained'
+											endIcon={<SearchIcon />}
+											onClick={Filter}
+											// style={{marginLeft:'5px'}}
+										>
+											Search
+										</Button>
+									</Stack>
+								</div>
+							</div>
+							<div className='filter__container'>
 								<div className='filter__items'>
-									<Stack direction='row' spacing={2}>
+									<Stack direction='row' spacing={2}  divider={<Divider orientation='vertical' flexItem />}>
 										<Pdf
 											targetRef={componentRef}
-											filename={`${(new Date()).toDateString()} Form`}
+											filename={`${new Date().toDateString()} Form`}
 										>
 											{({ toPdf }) => (
 												<Button
@@ -140,13 +321,21 @@ function Portal() {
 											)}
 										</Pdf>
 
-										<Button
-											
-											variant='outlined'
-											endIcon={<ListAltIcon />}
+										<ExcelFile
+											filename={`Registered ${todaysDate}`}
+											element={
+												<Button
+													type='button'
+													variant='outlined'
+													endIcon={<ListAltIcon />}
+												>
+													Excel
+												</Button>
+											}
 										>
-											Excel
-										</Button>
+											<ExcelSheet dataSet={ExcelData} name='Exc' />
+										</ExcelFile>
+
 										<Button
 											onClick={handlePrint}
 											variant='contained'
@@ -172,8 +361,15 @@ function Portal() {
 						<h4 className='table__title'>Registered</h4>
 						<div className='recent__table__container'>
 							<Paper className={classes.root}>
-								<TableContainer className={classes.container} ref={componentRef}>
-									<Table stickyHeader aria-label='sticky table'>
+								<TableContainer
+									className={classes.container}
+									ref={componentRef}
+								>
+									<Table
+										stickyHeader
+										aria-label='sticky table'
+										id='table-to-xls'
+									>
 										<TableHead>
 											<TableRow>
 												<TableCell
@@ -229,8 +425,10 @@ function Portal() {
 											</TableRow>
 										</TableHead>
 										<TableBody>
-											{Registerd < 0 ? (
-												<h4>No registration for today</h4>
+											{Registerd.length < 1 ? (
+												<TableRow>
+													<TableCell>No Result Found</TableCell>
+												</TableRow>
 											) : (
 												Registerd?.map((item) => {
 													const {
@@ -270,6 +468,7 @@ function Portal() {
 										</TableBody>
 									</Table>
 								</TableContainer>
+
 								<TablePagination
 									rowsPerPageOptions={[10, 25, 100]}
 									component='div'
@@ -300,4 +499,4 @@ function Portal() {
 	);
 }
 
-export default Portal;
+export default withRouter(Portal);

@@ -2,11 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+
+import Provider from './Store/Context/StoreProvider';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
+
+  <Provider>
+
     <App />
+  </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

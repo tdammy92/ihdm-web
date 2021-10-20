@@ -1,14 +1,18 @@
-import React from "react";
+import React,{useEffect} from "react";
 
 import { Container } from "@mui/material";
 
 import PageHero from "../../Partials/Hero/PageHero";
+import { Button } from "../../Partials/Button/Button";
 
 import HeroImage from "../../../Assets/License.jpg";
 import "../Page.css";
 import "./FooterPage.css";
 
 function License() {
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 	return (
 		<>
 			<PageHero img={HeroImage} title='LICENSE' subtitle='' />
@@ -60,6 +64,27 @@ function License() {
 						</div>
 					</Container>
 				</section>
+			</div>
+			<div className='register__cta'>
+				<div className='inner__cta'>
+					<h3>Want more information ? </h3>
+					<h4>Reach us on:</h4>
+					<ul>
+						<li>+2347033458730</li>
+						<li>+2347038286393</li>
+						<li>+2348074090417</li>
+						<li>ihdminfo02@gmail.com</li>
+					</ul>
+				</div>
+
+				<Button
+					className='btns'
+					buttonStyle='btn--outline'
+					buttonSize='btn--large'
+					to='/register'
+				>
+					Register
+				</Button>
 			</div>
 		</>
 	);

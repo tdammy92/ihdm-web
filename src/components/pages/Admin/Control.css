@@ -68,7 +68,11 @@
 }
 
 .filter__items {
-    margin: 5px;
+    /* margin-right: 5px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 
 import { Container } from "@mui/material";
 
@@ -10,6 +10,9 @@ import "../Page.css";
 import "./FooterPage.css";
 
 function Media() {
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 	return (
 		<>
 			<PageHero img={HeroImage} title='MEDIA' subtitle='' />
@@ -80,8 +83,11 @@ function Media() {
 										<strong>DURATION:</strong> 5 Days
 									</p>
 									<p>
-										<strong>DATE: </strong> 30th November-4th December, 2021
+										<strong>DATE: </strong> 7th-11th December, 2021
 									</p>
+									{/* <p>
+										<strong>DATE: </strong> 30th November-4th December, 2021
+									</p> */}
 									<p>
 										<strong>TIME:</strong> Tuesday-Friday, 3pm-7pm and Saturday
 										10am-4pm

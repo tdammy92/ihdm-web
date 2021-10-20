@@ -11,12 +11,25 @@ import Org4 from "../../../Assets/org4.jpeg";
 import Org5 from "../../../Assets/org5.jpeg";
 import Org6 from "../../../Assets/org6.jpeg";
 import Org7 from "../../../Assets/org7.jpeg";
-import Org8 from "../../../Assets/org8.jpeg";
+import Org8 from "../../../Assets/org8.png";
+
 import Org9 from "../../../Assets/org9.jpeg";
-import Org10 from "../../../Assets/org10.jpeg";
+
 import Org11 from "../../../Assets/org11.jpeg";
 import Org12 from "../../../Assets/org12.jpeg";
-import Org13 from "../../../Assets/org13.png";
+import Org13 from "../../../Assets/org12.jpeg";
+import Org14 from "../../../Assets/org14.png";
+
+
+import Org15 from "../../../Assets/org15.jpeg";
+
+import Org17 from "../../../Assets/org17.png";
+import Org18 from "../../../Assets/org18.png";
+import Org19 from "../../../Assets/org19.jpg";
+import Org20 from "../../../Assets/org20.png";
+
+import Org27 from "../../../Assets/org27.jpeg";
+
 
 function getRandomIndex(min, max) {
 	var offset = min;
@@ -35,9 +48,18 @@ const rates = [
 	Org7,
 	Org8,
 	Org9,
-	Org10,
+	
 	Org11,
 	Org12,
+	Org14,
+	Org15,
+
+	Org17,
+	Org18,
+	Org19,
+	Org20,
+
+	Org27,
 ];
 
 function MakeFakeAPICall() {

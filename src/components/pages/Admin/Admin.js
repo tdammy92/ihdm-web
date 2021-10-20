@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container } from "@mui/material";
 import { Paper } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link , Redirect,useHistory, withRouter} from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,10 +11,14 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+
 import axios from "axios";
+import Store from "../../../Store/Context/Store";
 
 import { BaseApi } from "../../../Store/Utility";
-import { getUser } from "../../../Store/Utility";
+
 
 function Admin() {
 	const useStyles = makeStyles({
@@ -25,7 +29,7 @@ function Admin() {
 			maxHeight: 440,
 		},
 	});
-
+	const [Loader, setLoader] = useState(true);
 	const [Registerd, setRegisterd] = useState([]);
 	const [TotalRegisterd, setTotalRegisterd] = useState('');
 
@@ -33,8 +37,15 @@ function Admin() {
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(10);
 
-	const user = getUser();
-	const { jwt } = user;
+
+	const history = useHistory()
+
+	const {User} = Store();
+	const { jwt,user } = User;
+
+	
+
+
 
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
@@ -46,11 +57,11 @@ function Admin() {
 		setPage(0);
 	};
 
-    console.log(todaysDate)
+  
 
 	async function getRegisterdToday() {
 		axios
-			.get(`${BaseApi}/registers?createdAt_gte=${todaysDate}`, {
+			.get(`${BaseApi}/registers?createdAt_gte=${todaysDate}&_sort=createdAt:DESC&`, {
 				headers: { Authorization: `Bearer ${jwt}` },
 			})
 			.then((res) => {
@@ -71,6 +82,7 @@ function Admin() {
 			.then((res) => {
 				
 				setTotalRegisterd(res.data);
+				setLoader(false)
 			})
 			.catch((err) => {
 				return console.log(err.message);
@@ -80,11 +92,22 @@ function Admin() {
 	useEffect(() => {
 		getRegisterdToday();
         getTotalRegisterd()
+		window.scrollTo(0, 0)
 	}, []);
+
+
+
+	if (user?.role.name !== 'Admin') {
+        return <Redirect to='/'/>
+    }
+
+
 
 	
 
 	return (
+		<>
+
 		<div>
 			<section>
 				<Container
@@ -221,7 +244,20 @@ function Admin() {
 				</Container>
 			</section>
 		</div>
+		{Loader ? (
+				<div>
+					<Backdrop
+						sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+						open={true}
+					>
+						<CircularProgress color='inherit' />
+					</Backdrop>
+				</div>
+			) : (
+				<div></div>
+			)}
+		</>
 	);
 }
 
-export default Admin;
+export default withRouter(Admin);
