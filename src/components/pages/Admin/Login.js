@@ -58,9 +58,11 @@ function Login() {
 			.then((res) => {
 				if (res.data.jwt) {
 					localStorage.setItem("admin", JSON.stringify(res.data));
+					// setLoader(false);
 					LogIn(res.data);
-					setLoader(false);
 					history.push("/");
+
+					window.location.reload(false);
 				}
 			})
 			.catch((err) => {

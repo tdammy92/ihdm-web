@@ -15,113 +15,13 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import Image1 from "../../../Assets/image1.jpeg";
-import Image2 from "../../../Assets/image2.jpeg";
-import Image3 from "../../../Assets/image3.jpeg";
-import Image4 from "../../../Assets/image4.jpeg";
 
 import { useMediaQuery } from "react-responsive";
 
 // caoursel imports
 
-import { Carousel } from "react-responsive-carousel";
+import SliderCarousel from "../../Partials/Carousel/Slider";
 // requires a loader
-
-function MobilSlider() {
-	return (
-		<div className='Mobile__slider__content'>
-			<Carousel
-				infiniteLoop={true}
-				autoPlay={true}
-				showIndicators={false}
-				showThumbs={false}
-				width='100%'
-			>
-				<div className='Mobile__slideImage__item'>
-					<img src={Image1} className='Mobile__slideImage' alt='slide' />
-					<p>
-						Analysing Youth Restiveness, Electoral violence and security
-						challenges
-					</p>
-				</div>
-				<div className='Mobile__slideImage__item'>
-					<img src={Image2} className='Mobile__slideImage' alt='slide' />
-					<p>
-						Shaping the mindset and developing the atitudes tolerance in the
-						next generation
-					</p>
-				</div>
-				<div className='Mobile__slideImage__item'>
-					<img src={Image3} className='Mobile__slideImage' alt='slide' />
-					<p>
-						Shaping the mindset and developing the atitudes tolerance in the
-						next generation
-					</p>
-				</div>
-				{/* <div className='Mobile__slideImage__item'>
-                    <img src={Image3} className='Mobile__slideImage' alt='slide'/>
-                    <p >Advancing Women and youth in peace building</p>
-                </div>
-                <div className='Mobile__slideImage__item'>
-                    <img src={Image4} className='Mobile__slideImage' alt='slide'/>
-                    <p >Promoting and strengthening Comunity Peace</p>
-                </div>
-                <div className='Mobile__slideImage__item'>
-                    <img src={Image5} className='Mobile__slideImage' alt='slide'/>
-                    <p >Training and Raising Peace Builders </p>
-                </div>
-                <div className='Mobile__slideImage__item'>
-                    <img src={Image6} className='Mobile__slideImage' alt='slide'/>
-                    <p >Promoting Ethno-Religious Dialogue and inclusion</p>
-                </div>
-                <div className='Mobile__slideImage__item'>
-                    <img src={Image7} className='Mobile__slideImage' alt='slide'/>
-                    <p >Mediation, Negotiation,Dialogue and Reconcilliation</p>
-                </div>
-                <div className='Mobile__slideImage__item'>
-                    <img src={Image8} className='Mobile__slideImage' alt='slide'/>
-                    <p >Intervention and Resolving Economic Resources Conflict</p>
-                </div>
-                <div className='Mobile__slideImage__item'>
-                    <img src={Image9} className='Mobile__slideImage' alt='slide'/>
-                    <p >Corporate and Workplace Conflict Prevention</p>
-                </div> */}
-			</Carousel>
-		</div>
-	);
-}
-function DesktopSlider() {
-	return (
-		<div className='slider__content'>
-			<Carousel
-				infiniteLoop={true}
-				autoPlay={true}
-				showIndicators={false}
-				showThumbs={false}
-				width='100%'
-			>
-				<div className='slideImage__item'>
-					<img src={Image1} className='slideImage' alt='slide' />
-					<p>
-						Analysing Youth Restiveness, Electoral violence and security
-						challenges
-					</p>
-				</div>
-				<div className='slideImage__item'>
-					<img src={Image3} className='slideImage' alt='slide' />
-					<p>
-						Shaping the mindset and developing the atitudes tolerance in the
-						next generation
-					</p>
-				</div>
-				<div className='slideImage__item'>
-					<img src={Image4} className='slideImage' alt='slide' />
-					<p>Advancing Women and youth in peace building</p>
-				</div>
-			</Carousel>
-		</div>
-	);
-}
 
 function Home() {
 	const isMobile = useMediaQuery({ maxWidth: 960 });
@@ -130,15 +30,14 @@ function Home() {
 		window.scrollTo(0, 0);
 	}, []);
 
-
 	const settings = {
 		dots: true,
 		infinite: true,
 		speed: 500,
 		slidesToShow: 1,
 		slidesToScroll: 1,
-		autoPlay:true
-	  };
+		autoPlay: true,
+	};
 
 	return (
 		<>
@@ -328,14 +227,19 @@ function Home() {
 						</Grid>
 					</div>
 				</Container>
-				<Container style={{ height: "100px" }}>
-					{/* <div className='slider__Container'>
-						{isMobile && <MobilSlider />}
-						{!isMobile && <DesktopSlider />}
-					</div>  */}
-				
-
+				<Container style={{ height: "30px" }}>
+					
 				</Container>
+			</div>
+			<div className='page__Container'>
+				
+					<Container>
+						<hr className='LongLIne' />
+						<SliderCarousel />
+					</Container>
+		
+
+				
 			</div>
 		</>
 	);

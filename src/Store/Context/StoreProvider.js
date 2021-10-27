@@ -18,8 +18,8 @@ function Provider({ children }) {
 	function LogOut() {
         localStorage.clear()
 		dispatch({ type: actionTypes.LOG_OUT });
-
-    //    return <Redirect to="/"/>
+		window.location.reload(false);
+       return <Redirect to="/"/>
        
 
 

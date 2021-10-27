@@ -305,7 +305,9 @@ function Portal() {
 							</div>
 							<div className='filter__container'>
 								<div className='filter__items'>
-									<Stack direction='row' spacing={2}  divider={<Divider orientation='vertical' flexItem />}>
+									<Stack direction='row' spacing={2}  
+									// divider= {<Divider orientation='vertical' flexItem/>}
+									>
 										<Pdf
 											targetRef={componentRef}
 											filename={`${new Date().toDateString()} Form`}
