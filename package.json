@@ -1,6 +1,7 @@
 {
     "name": "ihdm-web",
     "version": "0.1.0",
+    "homepage": "http://ihdm.com.ng/",
     "author": "Taiwo Damilola",
     "private": true,
     "dependencies": {

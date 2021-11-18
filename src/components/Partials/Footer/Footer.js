@@ -14,6 +14,7 @@ function Footer() {
 					<div className='footer-link-items'>
 						<Link to='/about'>About Us</Link>
 						<Link to='/contact'>Contact Us</Link>
+						<Link to='/affiliate'>Affiliate</Link>
 						<Link to='/nysc'>Nysc</Link>
 						<Link to='/register'>Register</Link>
 						<Link to='/member'>Membership</Link>
@@ -38,6 +39,7 @@ function Footer() {
           </div>  */}
 					<div className='footer-link-items'>
 						{/* <h2>Socials</h2> */}
+					
 						<Link to='/career'>Career</Link>
 						<Link to='/media'>Media</Link>
 						<Link to='/project'>Projects</Link>

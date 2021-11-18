@@ -30,6 +30,7 @@ import 'aos/dist/aos.css';
 import Store from "./Store/Context/Store";
 import Portal from "./components/pages/Admin/Portal";
 import FormView from "./components/pages/Admin/FormView";
+import Affiliate from "./components/pages/FooterPages/Affiliate";
 
 function App() {
 
@@ -66,6 +67,7 @@ function App() {
 						<Route path='/nysc' component={Nysc} />
 						<Route path='/register' component={Register} />
 						<Route path='/career' component={Career} />
+						<Route path='/affiliate' component={Affiliate} />
 						<Route path='/media' component={Media} />
 						<Route path='/project' component={Projects} />
 						<Route path='/license' component={License} />

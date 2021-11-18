@@ -85,6 +85,7 @@ const StateList = [
 ];
 
 const Diploma = [
+	"Nil",
 	"Diploma in Social and Community Development",
 	"Diploma in Monitoring and Evaluation",
 	"Diploma in Project Planning and Management",
@@ -102,6 +103,7 @@ const Diploma = [
 ];
 
 const PgdList = [
+	"Nil",
 	"PGD Diploma in Humanitarian and Disaster Risk Management",
 	"PGD Diploma in Humanitarian and Refugee Management",
 	"Professional PGD in Social and Community Development",
@@ -116,6 +118,7 @@ const PgdList = [
 ];
 
 const Courses = [
+	"Nil",
 	"Project Management",
 	"Human Resource Management",
 	"Monitoring and Evaluation",
@@ -130,6 +133,7 @@ const Courses = [
 	"Education in Emergencies",
 ];
 const Membership = [
+	"Nil",
 	"Student Member (SiHDM)",
 	"Affiliate Member (AFiHDM)",
 	"Associate Member (AiHDM)",
@@ -158,7 +162,7 @@ export default function Register() {
 	const [NigerState, setNigerState] = useState("Abuja(FCT)");
 	const [StateCode, setStateCode] = useState("");
 
-	const [Spec, setSpec] = useState("Human Resource Management");
+	const [Spec, setSpec] = useState("Nil");
 
 	const [FirstInst, setFirstInst] = useState("");
 	// first unstitution date
@@ -179,7 +183,7 @@ export default function Register() {
 	const [DateJoind2, setDateJoind2] = useState(new Date());
 	const [DateLeft2, setDateLeft2] = useState(new Date());
 
-	const [Diplom, setDiplom] = useState("Diploma in Human Resource Management");
+	const [Diplom, setDiplom] = useState("Nil");
 
 	// pgd select checkbox code
 	const ITEM_HEIGHT = 40;
@@ -207,7 +211,7 @@ export default function Register() {
 		
 	};
 
-	const [Memba, setMemba] = useState("Student Member (SiHDM)");
+	const [Memba, setMemba] = useState("Nil");
 
 	function ResetInput() {
 		setFirstName("");
@@ -217,12 +221,12 @@ export default function Register() {
 		setAddress("");
 		setNigerState("Abuja(FCT)");
 		setStateCode("");
-		setSpec("Human Resource Management");
+		setSpec("Nil");
 		setFirstInst("");
 		setSecondInst("");
 		setDate1(new Date());
 		setDate2(new Date());
-		setDiplom("Diploma in Human Resource Management");
+		setDiplom("Nil");
 		setPgd([]);
 		setAccept(false);
 		setcurrentRole("");
@@ -232,7 +236,7 @@ export default function Register() {
 		setPastOrg("");
 		setDateJoind2(new Date());
 		setDateLeft2(new Date());
-		setMemba("Student Member (SiHDM)");
+		setMemba("Nil");
 	}
 
 	function submitForm() {
@@ -739,6 +743,19 @@ export default function Register() {
 														</MenuItem>
 													))}
 												</Select>
+
+												
+												<span
+													style={{
+														fontSize: "12px",
+														color: "#808080",
+														fontFamily: "serif",
+														padding: "5px",
+													}}
+												>
+													* Selecting more than one (1) PGD attracts additional
+													cost from the initial
+												</span>
 											</FormControl>
 										</div>
 										<Typography

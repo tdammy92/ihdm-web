@@ -95,20 +95,20 @@ const MobileTable = () => {
 						<TableRow>
 							<TableCell align='center'>Bayelsa State </TableCell>
 							<TableCell align='center'>
-								Ms. Micheal Precious Onyenyechi
+							Thomas Joseph
 							</TableCell>
-							<TableCell align='center'>08145770061, 08184439402</TableCell>
+							<TableCell align='center'>08103321562</TableCell>
 						</TableRow>
 						<TableRow>
 							<TableCell align='center'>Benue State </TableCell>
 							<TableCell align='center'>Pagher James</TableCell>
 							<TableCell align='center'>07038867414</TableCell>
 						</TableRow>
-						<TableRow>
+						{/* <TableRow>
 							<TableCell align='center'>Kogi State</TableCell>
 							<TableCell align='center'>Michael Shina</TableCell>
 							<TableCell align='center'>07030210346</TableCell>
-						</TableRow>
+						</TableRow> */}
 						<TableRow>
 							<TableCell align='center'>Edo State </TableCell>
 							<TableCell align='center'>Mr. Godswill Osagie E.</TableCell>
@@ -151,25 +151,30 @@ const MobileTable = () => {
                                       <TableCell align="center">Mr. Animasaun Lukmon Abiola</TableCell>
                                       <TableCell align="center">07038877922</TableCell>
                               </TableRow> */}
-						<TableRow>
+						{/* <TableRow>
 							<TableCell align='center'>Plateau Sate </TableCell>
 							<TableCell align='center'>Mr Puttu Lot Musa</TableCell>
 							<TableCell align='center'>08056796881, 09020638912</TableCell>
-						</TableRow>
-						<TableRow>
+						</TableRow> */}
+						{/* <TableRow>
 							<TableCell align='center'>Taraba State</TableCell>
 							<TableCell align='center'>Mr. Emmanuel Shawulu</TableCell>
 							<TableCell align='center'>09037566599, 08071463057</TableCell>
-						</TableRow>
-						<TableRow>
+						</TableRow> */}
+						{/* <TableRow>
 							<TableCell align='center'>Sokoto State</TableCell>
 							<TableCell align='center'>Mr. Ajijila Gideon Victor</TableCell>
 							<TableCell align='center'>08130301659</TableCell>
-						</TableRow>
+						</TableRow> */}
 						<TableRow>
 							<TableCell align='center'> Rivers State </TableCell>
 							<TableCell align='center'>Rufus Christian</TableCell>
 							<TableCell align='center'>07013246991</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell align='center'> Enugu State </TableCell>
+							<TableCell align='center'>Ojimadu Ihuoma</TableCell>
+							<TableCell align='center'>08065422849</TableCell>
 						</TableRow>
 						<TableRow>
 							<TableCell align='center'> Oyo State </TableCell>
@@ -335,135 +340,116 @@ export default function Contact() {
 											</TableRow>
 										</TableHead>
 										<TableBody>
-											<TableRow>
-												<TableCell align='center'>Abuja </TableCell>
-												<TableCell align='center'>
-													Ms. Asanga Ifreke Precious
-												</TableCell>
-												<TableCell align='center'>08092693020</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell align='center'>Bauchi State </TableCell>
-												<TableCell align='center'>
-													Mr. Ohaju Stanley Ugochukwu
-												</TableCell>
-												<TableCell align='center'>
-													08166467814, 08134995959
-												</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell align='center'>Adamawa State </TableCell>
-												<TableCell align='center'>Musa Ali</TableCell>
-												<TableCell align='center'>08036800220</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell align='center'>Bayelsa State </TableCell>
-												<TableCell align='center'>
-													Ms. Micheal Precious Onyenyechi
-												</TableCell>
-												<TableCell align='center'>
-													08145770061, 08184439402
-												</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell align='center'>Benue State </TableCell>
-												<TableCell align='center'>Pagher James</TableCell>
-												<TableCell align='center'>07038867414</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell align='center'>Kogi State</TableCell>
-												<TableCell align='center'>Michael Shina</TableCell>
-												<TableCell align='center'>07030210346</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell align='center'>Edo State </TableCell>
-												<TableCell align='center'>
-													Mr. Godswill Osagie E.
-												</TableCell>
-												<TableCell align='center'>08075020854</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell align='center'>Ebonyi State</TableCell>
-												<TableCell align='center'>Ezaka Chineme</TableCell>
-												<TableCell align='center'>08064132443</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell align='center'>Gombe </TableCell>
-												<TableCell align='center'>
-													Mr. Nathaniel Richard Bono
-												</TableCell>
-												<TableCell align='center'>08149370633</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell align='center'>Kano State </TableCell>
-												<TableCell align='center'>Engr. Shehu Gambo</TableCell>
-												<TableCell align='center'>08133958990</TableCell>
-											</TableRow>
-											{/* <TableRow>
-                                
-                                        <TableCell align="center">Kaduna State	</TableCell>
-                                        <TableCell align="center">Ms. Ezenwe Chinaza Chinelo</TableCell>
-                                        <TableCell align="center">08162656220, 08136161592</TableCell>
-                                </TableRow> */}
-											<TableRow>
-												<TableCell align='center'>Nasarawa State </TableCell>
-												<TableCell align='center'>
-													Mr. Victor Kingsley Umbugadu
-												</TableCell>
-												<TableCell align='center'>08098312681</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell align='center'>Niger State </TableCell>
-												<TableCell align='center'>
-													Ms. Michael Janet Ihotu
-												</TableCell>
-												<TableCell align='center'>08141569400</TableCell>
-											</TableRow>
-											{/* <TableRow>
-                                
-                                        <TableCell align="center">Ogun State	</TableCell>
-                                        <TableCell align="center">Mr. Animasaun Lukmon Abiola</TableCell>
-                                        <TableCell align="center">07038877922</TableCell>
-                                </TableRow> */}
-											<TableRow>
-												<TableCell align='center'>Plateau Sate </TableCell>
-												<TableCell align='center'>Mr Puttu Lot Musa</TableCell>
-												<TableCell align='center'>
-													08056796881, 09020638912
-												</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell align='center'>Taraba State</TableCell>
-												<TableCell align='center'>
-													Mr. Emmanuel Shawulu
-												</TableCell>
-												<TableCell align='center'>
-													09037566599, 08071463057
-												</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell align='center'>Sokoto State</TableCell>
-												<TableCell align='center'>
-													Mr. Ajijila Gideon Victor
-												</TableCell>
-												<TableCell align='center'>08130301659</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell align='center'> Rivers State </TableCell>
-												<TableCell align='center'>Rufus Christian</TableCell>
-												<TableCell align='center'>07013246991</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell align='center'> Oyo State </TableCell>
-												<TableCell align='center'>Aderanti Victor</TableCell>
-												<TableCell align='center'>08064101708</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell align='center'> Ekiti State</TableCell>
-												<TableCell align='center'>Apara Titilayo</TableCell>
-												<TableCell align='center'>09031904041</TableCell>
-											</TableRow>
-										</TableBody>
+						<TableRow>
+							<TableCell align='center'>Abuja </TableCell>
+							<TableCell align='center'>Ms. Asanga Ifreke Precious</TableCell>
+							<TableCell align='center'>08092693020</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell align='center'>Bauchi State </TableCell>
+							<TableCell align='center'>Mr. Ohaju Stanley Ugochukwu</TableCell>
+							<TableCell align='center'>08166467814, 08134995959</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell align='center'>Adamawa State </TableCell>
+							<TableCell align='center'>Musa Ali</TableCell>
+							<TableCell align='center'>08036800220</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell align='center'>Bayelsa State </TableCell>
+							<TableCell align='center'>
+							Thomas Joseph
+							</TableCell>
+							<TableCell align='center'>08103321562</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell align='center'>Benue State </TableCell>
+							<TableCell align='center'>Pagher James</TableCell>
+							<TableCell align='center'>07038867414</TableCell>
+						</TableRow>
+						{/* <TableRow>
+							<TableCell align='center'>Kogi State</TableCell>
+							<TableCell align='center'>Michael Shina</TableCell>
+							<TableCell align='center'>07030210346</TableCell>
+						</TableRow> */}
+						<TableRow>
+							<TableCell align='center'>Edo State </TableCell>
+							<TableCell align='center'>Mr. Godswill Osagie E.</TableCell>
+							<TableCell align='center'>08075020854</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell align='center'>Ebonyi State</TableCell>
+							<TableCell align='center'>Ezaka Chineme</TableCell>
+							<TableCell align='center'>08064132443</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell align='center'>Gombe </TableCell>
+							<TableCell align='center'>Mr. Nathaniel Richard Bono</TableCell>
+							<TableCell align='center'>08149370633</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell align='center'>Kano State </TableCell>
+							<TableCell align='center'>Engr. Shehu Gambo</TableCell>
+							<TableCell align='center'>08133958990</TableCell>
+						</TableRow>
+						{/* <TableRow>
+                              
+                                      <TableCell align="center">Kaduna State	</TableCell>
+                                      <TableCell align="center">Ms. Ezenwe Chinaza Chinelo</TableCell>
+                                      <TableCell align="center">08162656220, 08136161592</TableCell>
+                              </TableRow> */}
+						<TableRow>
+							<TableCell align='center'>Nasarawa State </TableCell>
+							<TableCell align='center'>Mr. Victor Kingsley Umbugadu</TableCell>
+							<TableCell align='center'>08098312681</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell align='center'>Niger State </TableCell>
+							<TableCell align='center'>Ms. Michael Janet Ihotu</TableCell>
+							<TableCell align='center'>08141569400</TableCell>
+						</TableRow>
+						{/* <TableRow>
+                              
+                                      <TableCell align="center">Ogun State	</TableCell>
+                                      <TableCell align="center">Mr. Animasaun Lukmon Abiola</TableCell>
+                                      <TableCell align="center">07038877922</TableCell>
+                              </TableRow> */}
+						{/* <TableRow>
+							<TableCell align='center'>Plateau Sate </TableCell>
+							<TableCell align='center'>Mr Puttu Lot Musa</TableCell>
+							<TableCell align='center'>08056796881, 09020638912</TableCell>
+						</TableRow> */}
+						{/* <TableRow>
+							<TableCell align='center'>Taraba State</TableCell>
+							<TableCell align='center'>Mr. Emmanuel Shawulu</TableCell>
+							<TableCell align='center'>09037566599, 08071463057</TableCell>
+						</TableRow> */}
+						{/* <TableRow>
+							<TableCell align='center'>Sokoto State</TableCell>
+							<TableCell align='center'>Mr. Ajijila Gideon Victor</TableCell>
+							<TableCell align='center'>08130301659</TableCell>
+						</TableRow> */}
+						<TableRow>
+							<TableCell align='center'> Rivers State </TableCell>
+							<TableCell align='center'>Rufus Christian</TableCell>
+							<TableCell align='center'>07013246991</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell align='center'> Enugu State </TableCell>
+							<TableCell align='center'>Ojimadu Ihuoma</TableCell>
+							<TableCell align='center'>08065422849</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell align='center'> Oyo State </TableCell>
+							<TableCell align='center'>Aderanti Victor</TableCell>
+							<TableCell align='center'>08064101708</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell align='center'> Ekiti State</TableCell>
+							<TableCell align='center'>Apara Titilayo</TableCell>
+							<TableCell align='center'>09031904041</TableCell>
+						</TableRow>
+					</TableBody>
 									</Table>
 								</TableContainer>
 							</div>

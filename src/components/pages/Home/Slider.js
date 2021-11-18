@@ -27,6 +27,8 @@ import Org17 from "../../../Assets/org17.png";
 import Org18 from "../../../Assets/org18.png";
 import Org19 from "../../../Assets/org19.jpg";
 import Org20 from "../../../Assets/org20.png";
+import Org21 from "../../../Assets/org21.png";
+import Org22 from "../../../Assets/org22.png";
 
 import Org27 from "../../../Assets/org27.jpeg";
 
@@ -58,6 +60,8 @@ const rates = [
 	Org18,
 	Org19,
 	Org20,
+	Org21,
+	Org22,
 
 	Org27,
 ];
