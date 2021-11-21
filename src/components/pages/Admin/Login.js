@@ -60,9 +60,11 @@ function Login() {
 					localStorage.setItem("admin", JSON.stringify(res.data));
 					// setLoader(false);
 					LogIn(res.data);
-					history.push("/");
+				
 
-					window.location.reload(false);
+					window.location.reload();
+
+					
 				}
 			})
 			.catch((err) => {

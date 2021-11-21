@@ -24,7 +24,7 @@ export default [
     },
     {
         title:'SecondImage',
-        description:'Early Childhood care and development',
+        description:'Early childhood care Development.',
         url:Image14
     },
     {
@@ -69,7 +69,7 @@ export default [
     },
     {
         title:'FifteenImage',
-        description:'Reasearch',
+        description:'Research',
         url:Image15
     },
     {
@@ -84,7 +84,7 @@ export default [
     },
     {
         title:'EighteenImage',
-        description:'Occupational Health and Safty Management',
+        description:'Occupational Health and Safety Management.',
         url:Image30
     },
 

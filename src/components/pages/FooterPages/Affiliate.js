@@ -10,7 +10,7 @@ import "./FooterPage.css";
 
 
 import AffiliateImage1 from '../../../Assets/org21.png'
-import AffiliateImage2 from '../../../Assets/org22.png'
+import AffiliateImage2 from '../../../Assets/org32.jpeg'
 
 function Affiliate() {
 	useEffect(() => {
@@ -18,11 +18,11 @@ function Affiliate() {
 	},[]);
 	return (
 		<>
-			<PageHero img={HeroImage} title='Affiliate' subtitle='Our Affiliate' />
+			<PageHero img={HeroImage} title='AFFILIATION' subtitle='We are affilited to..' />
 			<div className='page__Container'>
 				<Container>
 					<div>
-						<h3 className='page__subtitle'>Affiliates</h3>
+						<h3 className='page__subtitle'>Affiliation</h3>
 
 						<div className='affiliate__container'>
 							<div className='affiliate__item'>

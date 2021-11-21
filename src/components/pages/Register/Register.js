@@ -147,12 +147,6 @@ export default function Register() {
 
 	const alert = useAlert();
 
-	// const {
-	// 	register,
-	// 	handleSubmit,
-	// 	watch,
-	// 	formState: { errors },
-	// } = useForm();
 
 	const [FirstName, setFirstName] = useState("");
 	const [LastName, setLastName] = useState("");
@@ -265,7 +259,7 @@ export default function Register() {
 			membershipCat: Memba,
 		};
 
-		if ((FirstName === "") || (LastName === "") || (Phone === "")) {
+		if (((FirstName === "") || (LastName === "") || (Phone === "") || (StateCode==="")) || ((Diploma==='Nil') && (Spec==='Nil') && (Memba === 'Nil'))){
 			alert.show(`Please fill all important fileds`, {
 				title: "Incomplete Details",
 				type: types.ERROR,
