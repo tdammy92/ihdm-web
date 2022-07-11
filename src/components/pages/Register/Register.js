@@ -276,7 +276,7 @@ export default function Register() {
 
 					if (res.status === 200) {
 						alert.show(
-							`Dear ${FirstName} ${LastName} your form has been submitted`,
+							`Dear ${FirstName} ${LastName} your form has been submitted successfully`,
 							{
 								title: "Notification !!!",
 								type: types.SUCCESS,

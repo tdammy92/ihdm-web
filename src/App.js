@@ -46,7 +46,7 @@ function App() {
 
   const options = {
     position: positions.MIDDLE,
-    timeout: 4000,
+    timeout: 0,
 	transition: transitions.SCALE
   };
 
