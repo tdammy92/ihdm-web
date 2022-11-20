@@ -1,15 +1,17 @@
 import React from "react";
 import "./Footer.css";
-import { Link } from "react-router-dom";
+import { Link,useLocation } from "react-router-dom";
 
 import Store from "../../../Store/Context/Store";
 
 function Footer() {
 	const { User, LogOut } = Store();
 
+	const location = useLocation().pathname
+
 	return (
 		<div className='footer-container'>
-			<div className='footer-links'>
+		{location === '/admin'? null :	<div className='footer-links'>
 				<div className='footer-link-wrapper'>
 					<div className='footer-link-items'>
 						<Link to='/about'>About Us</Link>
@@ -48,7 +50,7 @@ function Footer() {
 						<Link to='/hcb'>Human Capacity Building</Link>
 					</div>
 				</div>
-			</div>
+			</div>}
 
 			<section className='social-media'>
 				<div className='social-media-wrap'>

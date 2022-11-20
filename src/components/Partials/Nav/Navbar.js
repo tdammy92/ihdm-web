@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "../Button/Button";
-import { Link } from "react-router-dom";
+import { Link,useLocation } from "react-router-dom";
 // import { useMediaQuery } from "react-responsive";
 import "./Navbar.css";
 import BrandLogo from "../../../Assets/android-chrome-192x192.png";
@@ -13,6 +13,10 @@ function Navbar() {
 	const closeMobileMenu = () => setClick(false);
 
 	// const isMobile = useMediaQuery({ maxWidth: 960 });
+
+	const location = useLocation().pathname;
+
+	console.log(location)
 
 	const showButton = () => {
 		if (window.innerWidth <= 960) {
@@ -57,7 +61,11 @@ function Navbar() {
 						</div>
 
 						<ul className={click ? "nav-menu active" : "nav-menu"}>
-							<li className='nav-item'>
+							{location ==='/admin'? null :
+								<>
+
+								
+								<li className='nav-item'>
 								<Link
 									to='/about'
 									className='nav-links'
@@ -121,12 +129,18 @@ function Navbar() {
 									Register
 								</Link>
 							</li>
+							</>
+							}
 						</ul>
-						{button && (
+						{location === '/admin'? null :<>
+
+						 {button && (
 							<Button buttonStyle='btn--outline' to='/register'>
 								Register
 							</Button>
 						)}
+						</>
+						}
 			
 				</div>
 			</nav>

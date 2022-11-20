@@ -64,6 +64,8 @@ function Login() {
 
 					window.location.reload();
 
+					// history.push('/admin')
+
 					
 				}
 			})
