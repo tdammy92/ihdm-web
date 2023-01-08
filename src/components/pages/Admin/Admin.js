@@ -10,7 +10,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-
+import BlurLinearIcon from '@mui/icons-material/BlurLinear';
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -18,6 +18,8 @@ import axios from "axios";
 import Store from "../../../Store/Context/Store";
 
 import { BaseApi } from "../../../Store/Utility";
+
+import { useSelector } from 'react-redux'
 
 
 function Admin() {
@@ -37,15 +39,25 @@ function Admin() {
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(10);
 
+	const [GetSerial, setGetSerial] = useState([]);
+	const [usedSerial, setUsedSerial] = useState([])
+
 
 	const history = useHistory()
 
-	const {User} = Store();
-	const { jwt,user } = User;
+	const {userDetails,token} = useSelector(state=>state)
+
+	// const {User:{jwt,user}} = Store();
+
+
+
+
+
 
 	
 
-
+// console.log("token",token);
+// console.log("User",userDetails);
 
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
@@ -61,11 +73,37 @@ function Admin() {
 
 	async function getRegisterdToday() {
 		axios
-			.get(`${BaseApi}/registers?createdAt_gte=${todaysDate}&_sort=createdAt:DESC&`, {
-				headers: { Authorization: `Bearer ${jwt}` },
+			.get(`${BaseApi}/student/recent`, {
+				headers: {
+					"Content-Type": "apllication/json",
+					 Authorization: `Bearer ${token}` },
 			})
 			.then((res) => {
-				setRegisterd(res.data);
+				// console.log("recent registersd",res)
+				setRegisterd(res?.data);
+				
+			})
+			.catch((err) => {
+				return console.log(err.message);
+			});
+	}
+
+
+	async function getSerialCount() {
+		axios
+			.get(`${BaseApi}/serial`, {
+				headers: {
+					"Content-Type": "apllication/json",
+					 Authorization: `Bearer ${token}` },
+			})
+			.then((res) => {
+
+				console.log("serial detail",res);
+				// console.log("recent registersd",res)
+				setGetSerial(res?.data);
+
+				const used = res?.data?.filter((item)=>item.isValid!==true)
+				setUsedSerial(used)
 				
 			})
 			.catch((err) => {
@@ -76,12 +114,14 @@ function Admin() {
 
 	async function getTotalRegisterd() {
 		axios
-			.get(`${BaseApi}/registers/count`, {
-				headers: { Authorization: `Bearer ${jwt}` },
+			.get(`${BaseApi}/student`, {
+				headers: {
+					"Content-Type": "apllication/json",
+					 Authorization: `Bearer ${token}` }
 			})
 			.then((res) => {
-				
-				setTotalRegisterd(res.data);
+				// console.log("Total registersd",res)
+				setTotalRegisterd(res?.data?.length);
 				setLoader(false)
 			})
 			.catch((err) => {
@@ -91,15 +131,16 @@ function Admin() {
 
 	useEffect(() => {
 		getRegisterdToday();
-        getTotalRegisterd()
+        getTotalRegisterd();
+		getSerialCount()
 		window.scrollTo(0, 0)
 	}, []);
 
 
 
-	if (user?.role.name !== 'Admin') {
-        return <Redirect to='/'/>
-    }
+	// if (user?.role.name !== 'Admin') {
+    //     return <Redirect to='/'/>
+    // }
 
 
 
@@ -122,8 +163,9 @@ function Admin() {
 						<div className='dashboard__items' >
 							<Paper elevation={3}>
 								<div className='dasboard__list'>
-									<i class='fas fa-user-graduate'></i>
-									<h4>Today's Registration</h4>
+									<i className='fas fa-user-graduate'></i>
+									<h4>Recent Registration</h4>
+									{/* <h4>Today's Registration</h4> */}
 
 								
                                     {Registerd.length<0 ? <h2>0</h2> : <h2>{Registerd.length}</h2> }
@@ -133,10 +175,25 @@ function Admin() {
 						<Link className='dashboard__items' to='/portal'>
 							<Paper elevation={3}>
 								<div className='dasboard__list'>
-									<i class='fas fa-users'></i>
+									<i className='fas fa-users'></i>
 									<h4>Total Registered</h4>
 
 									{TotalRegisterd<0 ? <h2>0</h2> : <h2>{TotalRegisterd}</h2> }
+								</div>
+							</Paper>
+						</Link>
+						<Link className='dashboard__items' to='/serial'>
+							<Paper elevation={3}>
+								<div className='dasboard__list'>
+									{/* <i className='fas fa-users'></i> */}
+
+									<div  />
+							
+
+									<BlurLinearIcon color="#03256C"  fontSize="large"/>
+									<h4 >Serial Number</h4>
+
+							<h2>{usedSerial.length}/{GetSerial.length}</h2>
 								</div>
 							</Paper>
 						</Link>
@@ -203,15 +260,15 @@ function Admin() {
 											<h4>No registration for today</h4>
 										) : (
 											Registerd?.map((item) => {
-												const { id, Fname, Lname, state, phone, email,stateCode } = item;
+												const { _id, Fname, Lname, state, phone, email,stateCode } = item;
 												return (
 													<TableRow
 														hover
 														role='checkbox'
 														tabIndex={-1}
-														key={id}
+														key={_id}
 														component={Link}
-														to={`/portal/${id}`}
+														to={`/portal/${_id}`}
 														style={{ textDecoration: "none" }}
 													>
 														<TableCell align='center'>

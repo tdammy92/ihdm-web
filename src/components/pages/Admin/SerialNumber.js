@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from "react";
 import { Paper } from "@mui/material";
 import { Container } from "@mui/material";
@@ -11,6 +12,7 @@ import DatePicker from "@mui/lab/DatePicker";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Divider from "@mui/material/Divider";
 
@@ -57,8 +59,8 @@ const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 // const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
-function Portal() {
-	const [Loader, setLoader] = useState(false);
+function SerialNumber() {
+    const [Loader, setLoader] = useState(false);
 
 	const useStyles = makeStyles({
 		root: {
@@ -76,6 +78,10 @@ function Portal() {
 	const [Registerd, setRegisterd] = useState([]);
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [SearchValue, setSearchValue] = useState("");
+    const [openToolTip, setOpenToolTip] = useState(false);
+
+    const [Serial, setSerial] = useState([])
 
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
@@ -91,74 +97,20 @@ function Portal() {
 
 	const isMobile = useMediaQuery({ maxWidth: 960 });
 
-	// ?firstName_eq=John
-	// ?createdAt_gte=${todaysDate}
 
-	const [SearchBy, setSearchBy] = useState("First Name");
-	const [Dae, setDae] = useState(new Date());
-	const [SearchValue, setSearchValue] = useState("");
+	
 
-	function ResetForm() {
-		setSearchBy("First Name");
-		setSearchValue("");
-		setDae(new Date());
-	}
+	
 
-	function ApiRequest(url) {
-		setLoader(true);
+	async function getAllSerial() {
 		axios
-			.get(`${url}`, {
+			.get(`${BaseApi}/serial`, {
 				headers: { Authorization: `Bearer ${token}` },
 			})
 			.then((res) => {
-				setRegisterd(res.data);
-				ResetForm();
-				setLoader(false);
-			})
-			.catch((error) => {
-				console.log(error.message);
-				setLoader(false);
-			});
-	}
 
-	function Filter() {
-		if (SearchBy === "Fname") {
-			const url = `${BaseApi}/registers?Fname_eq=${SearchValue}&_sort=createdAt:DESC&`;
-
-			ApiRequest(url);
-		} else if (SearchBy === "Lname") {
-			const url = `${BaseApi}/registers?Lname_eq=${SearchValue}&_sort=createdAt:DESC&`;
-
-			ApiRequest(url);
-		} else if (SearchBy === "State") {
-			const url = `${BaseApi}/registers?state=${SearchValue}&_sort=createdAt:DESC&`;
-
-			ApiRequest(url);
-		} else if (SearchBy === "Phone") {
-			const url = `${BaseApi}/registers?phone=${SearchValue}&_sort=createdAt:DESC&`;
-
-			ApiRequest(url);
-		}else if(SearchBy === "StateCode"){
-			const url = `${BaseApi}/registers?stateCode=${SearchValue}&_sort=createdAt:DESC&`;
-
-			ApiRequest(url);
-
-		} else if (SearchBy === "Date") {
-			const SearchDate = Dae.toISOString().split("T")[0];
-			console.log(SearchDate);
-			const url = `${BaseApi}/registers?createdAt=${SearchDate}&_sort=createdAt:DESC&`;
-
-			ApiRequest(url);
-		}
-	}
-
-	async function getTotalRegisterd() {
-		axios
-			.get(`${BaseApi}/student`, {
-				headers: { Authorization: `Bearer ${token}` },
-			})
-			.then((res) => {
-				setRegisterd(res.data);
+                console.log("serial",res?.data)
+				setSerial(res.data);
 			})
 			.catch((err) => {
 				return console.log(err.message);
@@ -170,9 +122,14 @@ function Portal() {
 	});
 
 	useEffect(() => {
-		getTotalRegisterd();
+		getAllSerial();
 		window.scrollTo(0, 0);
 	}, []);
+
+    function copySerial(serial) {
+		navigator.clipboard.writeText(serial);
+        alert(`Copied ${serial}`)
+	}
 
 	const ExcelData = [
 		{
@@ -183,53 +140,40 @@ function Portal() {
 					width: { wpx: 40 },
 				},
 				{
-					title: "FIRST NAME",
+					title: "SERIAL NUMBER",
 					style: { font: { sz: "14", bold: true } },
 					width: { wpx: 125 },
 				},
 				{
-					title: "LAST NAME",
+					title: "VALID",
 					style: { font: { sz: "14", bold: true } },
 					width: { wpx: 125 },
 				},
 				{
-					title: "PHONE",
+					title: "DATE GENERATED",
 					style: { font: { sz: "14", bold: true } },
 					width: { wpx: 125 },
 				},
 				{
-					title: "EMAIL",
+					title: "DATE USED",
 					style: { font: { sz: "14", bold: true } },
 					width: { wpx: 125 },
 				},
-				{
-					title: "STATE",
-					style: { font: { sz: "14", bold: true } },
-					width: { wpx: 125 },
-				},
-				{
-					title: "STATE CODE",
-					style: { font: { sz: "14", bold: true } },
-					width: { wpx: 125 },
-				},
-				{
-					title: "DATE REGISTERED",
-					style: { font: { sz: "14", bold: true } },
-					width: { wpx: 125 },
-				},
+				
 			],
-			data: Registerd.map((data,i) => [
-				// { value: i+1, style: { font: { sz: "12" } } },
-				{ value: data.Fname, style: { font: { sz: "12" } } },
-				{ value: data.Lname, style: { font: { sz: "12" } } },
-				{ value: data.phone, style: { font: { sz: "12" } } },
-				{ value: data.email, style: { font: { sz: "12" } } },
-				{ value: data.state, style: { font: { sz: "12" } } },
-				{ value: data.stateCode, style: { font: { sz: "12" } } },
-				{
-					value: new Date(data.createdAt).toDateString(),
-					style: { font: { sz: "12" } },
-				},
+			data: Serial.map(({  _id,
+                serial,
+                dateGenerated,
+                dateUsed,
+                isValid,},i) => [
+            
+				{ value: i+1, style: { font: { sz: "8" } } },
+				{ value: serial, style: { font: { sz: "12" } } },
+				{ value: isValid, style: { font: { sz: "12" } } },
+				{ value: new Date(dateGenerated).toLocaleDateString(), style: { font: { sz: "12" } } },
+				{ value:!!isValid ?"Not Used" :new Date(dateUsed).toLocaleDateString(), style: { font: { sz: "12" } } },
+			
+				
 			]),
 		},
 	];
@@ -256,57 +200,25 @@ function Portal() {
 										spacing={2}
 										mt={1}
 									>
-										<FormControl sx={{ m: 1, minWidth: 200 }}>
-											<InputLabel id='demo-simple-select-helper-label'>
-												Search By
-											</InputLabel>
-											<Select
-												labelId='demo-simple-select-helper-label'
-												id='demo-simple-select-helper'
-												value={SearchBy}
-												label='Search-BY'
-												onChange={(e) => setSearchBy(e.target.value)}
-											>
-												<MenuItem value='Fname'>First Name</MenuItem>
-												<MenuItem value='Lname'>Last Name</MenuItem>
-												<MenuItem value='Phone'>Phone No</MenuItem>
-												<MenuItem value='State'>State</MenuItem>
-												<MenuItem value='StateCode'>State Code</MenuItem>
-												{/* <MenuItem value='Date'>Date</MenuItem> */}
-											</Select>
-											{/* <FormHelperText>With label + helper text</FormHelperText> */}
-										</FormControl>
-
-										{SearchBy === "Date" ? (
-											<LocalizationProvider dateAdapter={AdapterDateFns}>
-												<Stack spacing={1}>
-													<MobileDatePicker
-														label='Date'
-														value={Dae}
-														inputFormat='dd/MM/yyyy'
-														onChange={(newValue) => setDae(newValue)}
-														renderInput={(params) => <TextField {...params} />}
-													/>
-												</Stack>
-											</LocalizationProvider>
-										) : (
+									
 											<TextField
 												id='outlined-search'
-												label='Search field'
+												label="Serial"
+                                                placeholder='XXXX-XXXX-XXXX'
 												type='text'
 												value={SearchValue}
 												onChange={(e) => setSearchValue(e.target.value)}
 											/>
-										)}
+									
 
 										<Button
 											type='button'
 											variant='contained'
 											endIcon={<SearchIcon />}
-											onClick={Filter}
+											// onClick={Filter}
 											// style={{marginLeft:'5px'}}
 										>
-											Search
+											Generate Serial
 										</Button>
 									</Stack>
 								</div>
@@ -368,7 +280,7 @@ function Portal() {
 							justifyContent: "center",
 						}}
 					>
-						<h4 className='table__title'>Registered</h4>
+						<h4 className='table__title'>All Serial Number</h4>
 						<div className='recent__table__container'>
 							<Paper className={classes.root}>
 								<TableContainer
@@ -396,7 +308,7 @@ function Portal() {
 														minWidth: 70,
 													}}
 												>
-													FULL NAME
+													SERIAL NUMBER
 												</TableCell>
 												<TableCell
 													align='center'
@@ -404,7 +316,7 @@ function Portal() {
 														minWidth: 70,
 													}}
 												>
-													PHONE
+												VALID
 												</TableCell>
 
 												<TableCell
@@ -413,7 +325,7 @@ function Portal() {
 														minWidth: 70,
 													}}
 												>
-													EMAIL
+													DATE GENERATED
 												</TableCell>
 
 												<TableCell
@@ -422,7 +334,7 @@ function Portal() {
 														minWidth: 70,
 													}}
 												>
-													STATE
+													DATE USED
 												</TableCell>
 												<TableCell
 													align='center'
@@ -430,34 +342,25 @@ function Portal() {
 														minWidth: 70,
 													}}
 												>
-													STATE-CODE
+													ACTION
 												</TableCell>
-												<TableCell
-													align='center'
-													style={{
-														minWidth: 70,
-													}}
-												>
-													DATE
-												</TableCell>
+											
 											</TableRow>
 										</TableHead>
 										<TableBody>
-											{Registerd.length < 1 ? (
+											{Serial.length < 1 ? (
 												<TableRow>
 													<TableCell>No Result Found</TableCell>
 												</TableRow>
 											) : (
-												Registerd?.map((item,i) => {
+												Serial?.map((item,i) => {
 													const {
 														_id,
-														Fname,
-														Lname,
-														state,
-														phone,
-														email,
-														stateCode,
-														createdAt,
+														serial,
+														dateGenerated,
+														dateUsed,
+														isValid,
+													
 													} = item;
 													return (
 														<TableRow
@@ -465,23 +368,30 @@ function Portal() {
 															role='checkbox'
 															tabIndex={-1}
 															key={_id}
-															component={Link}
-															to={`/portal/${_id}`}
+															// component={Link}
+															// to={`/portal/${_id}`}
 															style={{ textDecoration: "none" }}
 														>
 															<TableCell align='center'>
 																{i+1}
 															</TableCell>
 															<TableCell align='center'>
-																{Fname} {Lname}
+																{serial}
 															</TableCell>
-															<TableCell align='center'>{phone}</TableCell>
-															<TableCell align='center'>{email}</TableCell>
-															<TableCell align='center'>{state}</TableCell>
-															<TableCell align='center'>{stateCode}</TableCell>
+															<TableCell align='center'  style={{color:isValid?'green':'red'}}>{isValid? "Yes": "No"}</TableCell>
+															<TableCell align='center'>{new Date(dateGenerated).toLocaleDateString()}</TableCell>
+															<TableCell align='center'>{!!isValid ? 'Not Used' :new Date(dateUsed).toLocaleDateString()}</TableCell>
 															<TableCell align='center'>
-																{new Date(createdAt).toLocaleDateString()}
-															</TableCell>
+                                                            <Button variant="outlined" onClick={() => {
+																				copySerial(serial);
+																				setOpenToolTip(true);
+																			}} size="small" disable={!!isValid} startIcon={<ContentCopyIcon />}>
+       Copy
+      </Button>
+                                                            </TableCell>
+														
+													
+														
 														</TableRow>
 													);
 												})
@@ -493,7 +403,7 @@ function Portal() {
 								<TablePagination
 									rowsPerPageOptions={[10, 25, 100]}
 									component='div'
-									count={Registerd?.length}
+									count={Serial?.length}
 									rowsPerPage={rowsPerPage}
 									page={page}
 									onPageChange={handleChangePage}
@@ -520,4 +430,4 @@ function Portal() {
 	);
 }
 
-export default withRouter(Portal);
+export default SerialNumber

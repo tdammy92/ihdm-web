@@ -19,14 +19,24 @@ import "./Control.css";
 
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useSelector, useDispatch } from 'react-redux'
+import {  addUser, removeUser } from '../../../Store/redux/userFeature'
 
-import Store from "../../../Store/Context/Store";
 
 function Login() {
 	const [Loader, setLoader] = useState(false);
 	const alert = useAlert();
-	
-	const {LogIn,User} = Store();
+	const  user = useSelector(state=>state)
+
+	const dispatch = useDispatch()
+
+
+
+	console.log("user from redux",user)
+
+
+
+
 	
 	// const {user} = User || null;
 	
@@ -46,25 +56,40 @@ function Login() {
 	function HandleLogin(data) {
 		// e.preventDefault()
 
-		const UserDetails = {
-			identifier: data.email,
+		const UserDetails =  {
+			email: data.email,
 			password: data.password,
 		};
+		// const UserDetails = JSON.stringify( {
+		// 	email: data.email,
+		// 	password: data.password,
+		// });
 
 	
 		setLoader(true);
 		axios
-			.post(`${BaseApi}/auth/local`, UserDetails)
+			.post(`${BaseApi}/auth/login`, UserDetails)
 			.then((res) => {
-				if (res.data.jwt) {
-					localStorage.setItem("admin", JSON.stringify(res.data));
+
+			
+
+
+				if (res.data) {
+
+
+const newUser = res?.data?.data?._doc
+const newToken = res?.data?.token
+
+
+					dispatch(addUser({newUser,newToken}))
+					// localStorage.setItem("admin", JSON.stringify(res?.data?.data?._doc));
 					// setLoader(false);
-					LogIn(res.data);
+					// LogIn(res.data);
 				
 
-					window.location.reload();
+					// window.location.reload();
 
-					// history.push('/admin')
+					history.push('/admin')
 
 					
 				}
@@ -134,7 +159,7 @@ function Login() {
 									label='Email'
 									name='email'
 									placeholder='User@gmail.com'
-									{...register("email", { required: "email is rquired" })}
+									{...register("email", { required: "email is required" })}
 									error={Boolean(errors.email)}
 									helperText={errors.email?.message}
 								/>

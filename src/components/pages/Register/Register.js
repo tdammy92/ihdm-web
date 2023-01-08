@@ -270,11 +270,11 @@ export default function Register() {
 			
 
 			axios
-				.post(`${BaseApi}/registers`, details)
+				.post(`${BaseApi}/student/register`,details)
 				.then((res) => {
 					console.log(res.data);
 
-					if (res.status === 200) {
+					if (res?.status===201 || res?.status ===200) {
 						alert.show(
 							`Dear ${FirstName} ${LastName} your form has been submitted successfully`,
 							{

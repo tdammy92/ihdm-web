@@ -1,13 +1,26 @@
 import React from "react";
 import "./Footer.css";
-import { Link,useLocation } from "react-router-dom";
-
-import Store from "../../../Store/Context/Store";
+import { Link,useLocation ,useHistory} from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux'
+import {  addUser, removeUser } from '../../../Store/redux/userFeature'
 
 function Footer() {
-	const { User, LogOut } = Store();
+const dispatch = useDispatch()
+const history = useHistory()
+
+
+const {userDetails,token,isLoggedIn} = useSelector(state=>state)
 
 	const location = useLocation().pathname
+
+
+
+function handleLogout() {
+	
+	dispatch(removeUser());
+
+	history.push('/')
+}
 
 	return (
 		<div className='footer-container'>
@@ -84,6 +97,7 @@ function Footer() {
 						>
 							<i className='fab fa-linkedin' />
 						</Link>
+
 						<Link
 							className='social-icon-link twitter'
 							to='/admin'
@@ -91,19 +105,19 @@ function Footer() {
 						>
 							<i class='fas fa-user-lock'></i>
 						</Link>
+						
 
-						{localStorage.getItem('admin') ? (
-							<Link
+						{isLoggedIn &&
+							(<div
 								className='social-icon-link twitter'
-								onClick={LogOut}
-								to='/'
+								onClick={handleLogout}
+								// to='/'
 								aria-label='LinkedIn'
 							>
 								<i class='fas fa-sign-out-alt'></i>
-							</Link>
-						) : (
-							""
-						)}
+							</div>)  
+					
+					}
 					</div>
 				</div>
 			</section>

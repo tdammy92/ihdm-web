@@ -25,7 +25,7 @@ import Paper from "@mui/material/Paper";
 
 import Button from "@mui/material/Button";
 import { useAlert } from "react-alert";
-
+import { useSelector } from 'react-redux'
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -45,6 +45,7 @@ const Div = styled("div")(({ theme }) => ({
 function FormView() {
 	const [Loader, setLoader] = useState(true);
 	const [Details, setDetails] = useState({});
+	const {userDetails,token} = useSelector(state=>state)
 
 	const componentRef = useRef();
 	const history = useHistory();
@@ -53,16 +54,16 @@ function FormView() {
 		content: () => componentRef.current,
 	});
 
-	const { User } = Store();
-	const { jwt, user } = User;
+
+
 	const alert = useAlert();
 
 	const { id } = useParams();
 
 	async function getDetails() {
 		axios
-			.get(`${BaseApi}/registers/${id}`, {
-				headers: { Authorization: `Bearer ${jwt}` },
+			.get(`${BaseApi}/student/${id}`, {
+				headers: { Authorization: `Bearer ${token}` },
 			})
 			.then((res) => {
 				setDetails(res.data);
@@ -77,8 +78,8 @@ function FormView() {
 
 	function DeleteForm(id) {
 		axios
-			.delete(`${BaseApi}/registers/${id}`, {
-				headers: { Authorization: `Bearer ${jwt}` },
+			.delete(`${BaseApi}/student/${id}`, {
+				headers: { Authorization: `Bearer ${token}` },
 			})
 			.then((res) => {
 				console.log(res.data);
@@ -129,11 +130,11 @@ function FormView() {
 		currentOrg,
 	} = Details;
 
-	if (User?.user?.role.name !== "Admin") {
+	// if (User?.user?.role.name !== "Admin") {
 		
 
-		<Redirect to='/login' />;
-	}
+	// 	<Redirect to='/login' />;
+	// }
 
 	// useEffect(() => {
 	// 	if (user?.role.name !== "Admin") {
