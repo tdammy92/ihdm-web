@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import { Paper } from "@mui/material";
 import { Container } from "@mui/material";
@@ -12,7 +11,7 @@ import DatePicker from "@mui/lab/DatePicker";
 import MobileDatePicker from "@mui/lab/MobileDatePicker";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Divider from "@mui/material/Divider";
 
@@ -37,6 +36,7 @@ import { useMediaQuery } from "react-responsive";
 
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 
+import CreditCardIcon from "@mui/icons-material/CreditCard";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
 import ListAltIcon from "@mui/icons-material/ListAlt";
@@ -53,14 +53,14 @@ import { BaseApi } from "../../../Store/Utility";
 
 import ReactExport from "react-data-export";
 
-import { useSelector } from 'react-redux'
+import { useSelector } from "react-redux";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 // const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 function SerialNumber() {
-    const [Loader, setLoader] = useState(false);
+	const [Loader, setLoader] = useState(false);
 
 	const useStyles = makeStyles({
 		root: {
@@ -74,14 +74,15 @@ function SerialNumber() {
 	const classes = useStyles();
 	const componentRef = useRef();
 	const history = useHistory();
-	const {userDetails,token} = useSelector(state=>state)
+	const { userDetails, token } = useSelector((state) => state);
 	const [Registerd, setRegisterd] = useState([]);
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [SearchValue, setSearchValue] = useState("");
-    const [openToolTip, setOpenToolTip] = useState(false);
+	const [SearchValue, setSearchValue] = useState("");
+	const [openToolTip, setOpenToolTip] = useState(false);
 
-    const [Serial, setSerial] = useState([])
+	const [Serial, setSerial] = useState([]);
+	const [newSerial, setnewSerial] = useState("");
 
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
@@ -92,24 +93,40 @@ function SerialNumber() {
 		setPage(0);
 	};
 
-
-
-
 	const isMobile = useMediaQuery({ maxWidth: 960 });
 
+	// console.log("my Token",token);
 
-	
-
-	
+	async function generateSerial() {
+		axios
+			.post(
+				`${BaseApi}/serial/generate`,
+				{},
+				{
+					headers: {
+						"Content-Type": "aplication/json",
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			)
+			.then((res) => {
+				console.log("serial", res?.data);
+				setnewSerial(res?.data?.data?.serial);
+			})
+			.catch((err) => {
+				return console.log(err.message);
+			});
+	}
 
 	async function getAllSerial() {
 		axios
 			.get(`${BaseApi}/serial`, {
-				headers: { Authorization: `Bearer ${token}` },
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
 			})
 			.then((res) => {
-
-                console.log("serial",res?.data)
+				console.log("serial", res?.data);
 				setSerial(res.data);
 			})
 			.catch((err) => {
@@ -124,11 +141,11 @@ function SerialNumber() {
 	useEffect(() => {
 		getAllSerial();
 		window.scrollTo(0, 0);
-	}, []);
+	}, [newSerial]);
 
-    function copySerial(serial) {
+	function copySerial(serial) {
 		navigator.clipboard.writeText(serial);
-        alert(`Copied ${serial}`)
+		alert(`Copied ${serial}`);
 	}
 
 	const ExcelData = [
@@ -159,28 +176,26 @@ function SerialNumber() {
 					style: { font: { sz: "14", bold: true } },
 					width: { wpx: 125 },
 				},
-				
 			],
-			data: Serial.map(({  _id,
-                serial,
-                dateGenerated,
-                dateUsed,
-                isValid,},i) => [
-            
-				{ value: i+1, style: { font: { sz: "8" } } },
-				{ value: serial, style: { font: { sz: "12" } } },
-				{ value: isValid, style: { font: { sz: "12" } } },
-				{ value: new Date(dateGenerated).toLocaleDateString(), style: { font: { sz: "12" } } },
-				{ value:!!isValid ?"Not Used" :new Date(dateUsed).toLocaleDateString(), style: { font: { sz: "12" } } },
-			
-				
-			]),
+			data: Serial?.map(
+				({ _id, serial, dateGenerated, dateUsed, isValid }, i) => [
+					{ value: i + 1, style: { font: { sz: "8" } } },
+					{ value: serial, style: { font: { sz: "12" } } },
+					{ value: isValid, style: { font: { sz: "12" } } },
+					{
+						value: new Date(dateGenerated).toLocaleDateString(),
+						style: { font: { sz: "12" } },
+					},
+					{
+						value: !!isValid
+							? "Not Used"
+							: new Date(dateUsed).toLocaleDateString(),
+						style: { font: { sz: "12" } },
+					},
+				]
+			),
 		},
 	];
-
-	// if (user?.role?.name !== "Admin") {
-	// 	return <Redirect to='/login' />;
-	// }
 
 	const todaysDate = new Date().toISOString().split("T")[0];
 
@@ -200,34 +215,46 @@ function SerialNumber() {
 										spacing={2}
 										mt={1}
 									>
-									
-											<TextField
-												id='outlined-search'
-												label="Serial"
-                                                placeholder='XXXX-XXXX-XXXX'
-												type='text'
-												value={SearchValue}
-												onChange={(e) => setSearchValue(e.target.value)}
-											/>
-									
+										<TextField
+											id='outlined-search'
+											label='Serial'
+											placeholder='XXXX-XXXX-XXXX'
+											defaultValue={newSerial}
+											value={newSerial}
+											type='text'
+											color='primary'
+											InputProps={{
+												readOnly: true,
+											}}
+											variant='standard'
+										/>
 
 										<Button
 											type='button'
 											variant='contained'
-											endIcon={<SearchIcon />}
-											// onClick={Filter}
-											// style={{marginLeft:'5px'}}
+											endIcon={<CreditCardIcon />}
+											onClick={generateSerial}
 										>
 											Generate Serial
 										</Button>
+										{newSerial!=='' && <Button
+											variant='outlined'
+											onClick={() => {
+												copySerial(newSerial);
+												setOpenToolTip(true);
+											}}
+											size='small'
+											
+											startIcon={<ContentCopyIcon />}
+										>
+											Copy
+										</Button>}
 									</Stack>
 								</div>
 							</div>
 							<div className='filter__container'>
 								<div className='filter__items'>
-									<Stack direction='row' spacing={2}  
-									// divider= {<Divider orientation='vertical' flexItem/>}
-									>
+									<Stack direction='row' spacing={2}>
 										<Pdf
 											targetRef={componentRef}
 											filename={`${new Date().toDateString()} Form`}
@@ -300,7 +327,7 @@ function SerialNumber() {
 														minWidth: 70,
 													}}
 												>
-												S/N
+													S/N
 												</TableCell>
 												<TableCell
 													align='center'
@@ -316,7 +343,7 @@ function SerialNumber() {
 														minWidth: 70,
 													}}
 												>
-												VALID
+													VALID
 												</TableCell>
 
 												<TableCell
@@ -342,25 +369,31 @@ function SerialNumber() {
 														minWidth: 70,
 													}}
 												>
+													USED BY
+												</TableCell>
+												<TableCell
+													align='center'
+													style={{
+														minWidth: 70,
+													}}
+												>
 													ACTION
 												</TableCell>
-											
 											</TableRow>
 										</TableHead>
 										<TableBody>
-											{Serial.length < 1 ? (
+											{Serial?.length < 1 ? (
 												<TableRow>
 													<TableCell>No Result Found</TableCell>
 												</TableRow>
 											) : (
-												Serial?.map((item,i) => {
+												Serial?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)?.map((item, i) => {
 													const {
 														_id,
 														serial,
 														dateGenerated,
 														dateUsed,
 														isValid,
-													
 													} = item;
 													return (
 														<TableRow
@@ -372,26 +405,43 @@ function SerialNumber() {
 															// to={`/portal/${_id}`}
 															style={{ textDecoration: "none" }}
 														>
-															<TableCell align='center'>
-																{i+1}
+															<TableCell align='center'>{i + 1}</TableCell>
+															<TableCell align='center'  style={{ color: isValid ? "green" : "red" }}>{serial}</TableCell>
+															<TableCell
+																align='center'
+																
+															>
+																{isValid ? "Yes" : "No"}
 															</TableCell>
 															<TableCell align='center'>
-																{serial}
+																{new Date(dateGenerated).toLocaleDateString()}
 															</TableCell>
-															<TableCell align='center'  style={{color:isValid?'green':'red'}}>{isValid? "Yes": "No"}</TableCell>
-															<TableCell align='center'>{new Date(dateGenerated).toLocaleDateString()}</TableCell>
-															<TableCell align='center'>{!!isValid ? 'Not Used' :new Date(dateUsed).toLocaleDateString()}</TableCell>
 															<TableCell align='center'>
-                                                            <Button variant="outlined" onClick={() => {
-																				copySerial(serial);
-																				setOpenToolTip(true);
-																			}} size="small" disable={!!isValid} startIcon={<ContentCopyIcon />}>
-       Copy
-      </Button>
-                                                            </TableCell>
-														
-													
-														
+																{!!isValid
+																	? "Not Used"
+																	: new Date(dateUsed).toLocaleDateString()}
+															</TableCell>
+															<TableCell align='center'>
+																{!!item?.user
+																	? `${item?.user?.Fname} ${item?.user?.Lname}`
+																	:"Not Used"}
+															</TableCell>
+															
+															<TableCell align='center'>
+																<Button
+																	variant='outlined'
+																	onClick={() => {
+																		copySerial(serial);
+																		setOpenToolTip(true);
+																	}}
+																	size='small'
+																
+																	disabled={!isValid}
+																	startIcon={<ContentCopyIcon />}
+																>
+																	Copy
+																</Button>
+															</TableCell>
 														</TableRow>
 													);
 												})
@@ -430,4 +480,4 @@ function SerialNumber() {
 	);
 }
 
-export default SerialNumber
+export default SerialNumber;

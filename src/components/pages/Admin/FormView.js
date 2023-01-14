@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, Redirect, useHistory, withRouter } from "react-router-dom";
-
+import { format } from 'date-fns'
 import { useReactToPrint } from "react-to-print";
 
 import Pdf from "react-to-pdf";
@@ -68,7 +68,7 @@ function FormView() {
 			.then((res) => {
 				setDetails(res.data);
 				setLoader(false);
-				console.log(res.data);
+				// console.log(res.data);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -82,7 +82,7 @@ function FormView() {
 				headers: { Authorization: `Bearer ${token}` },
 			})
 			.then((res) => {
-				console.log(res.data);
+				// console.log(res.data);
 
 				alert.show(`form has been deleted`, {
 					title: "Notification !!!",
@@ -115,6 +115,8 @@ function FormView() {
 		createdAt,
 		AreaSpec,
 		DiplomaC,
+		DegreeC,
+		MasterC,
 		PgdC,
 		FirstInst,
 		DateCompleted1,
@@ -146,7 +148,7 @@ function FormView() {
 		<>
 			<div>
 				<section>
-					<Container>
+					<Container  style={{maxWidth:'800px'}}>
 						<div className='form__view__container'>
 							<div className='form__details' ref={componentRef}>
 								<Typography
@@ -210,6 +212,7 @@ function FormView() {
 												<TableCell align='left'>DATE REGISTERED</TableCell>
 												<TableCell align='left'>
 													{new Date(createdAt).toDateString() || 'Nil'}
+													{/* {format(new Date(createdAt.split('T')[0]), 'dd/MMM/yyyy') ?? 'Nil'} */}
 												</TableCell>
 											</TableRow>
 											<TableRow>
@@ -224,7 +227,11 @@ function FormView() {
 											</TableRow>
 											<TableRow>
 												<TableCell align='left'>DATE COMPLETED</TableCell>
-												<TableCell align='left'>{DateCompleted1 || 'Nil'}</TableCell>
+												<TableCell align='left'>
+												{new Date(DateCompleted1).toDateString() || 'Nil'}
+												{/* {format(new Date(DateCompleted1.split('T')[0]), 'dd/MMM/yyyy') ?? 'Nil'} */}
+												</TableCell>
+												
 											</TableRow>
 											<TableRow>
 												<TableCell align='left'>SECOND INSTITUTE</TableCell>
@@ -284,19 +291,27 @@ function FormView() {
 												</TableCell>
 												<TableCell align='left'>{membershipCat || 'Nil'}</TableCell>
 											</TableRow>
-											<TableRow>
+											{/* <TableRow>
 												<TableCell align='left'>
 													AREA OF SPECIFICATION
 												</TableCell>
 												<TableCell align='left'>{AreaSpec || 'Nil'}</TableCell>
-											</TableRow>
+											</TableRow> */}
 											<TableRow>
 												<TableCell align='left'>DIPLOMA COURSE</TableCell>
-												<TableCell align='left'>{DiplomaC || 'Nil'}</TableCell>
+												<TableCell align='left'>{DiplomaC ?? 'Nil'}</TableCell>
+											</TableRow>
+											<TableRow>
+												<TableCell align='left'>DEGREE COURSE</TableCell>
+												<TableCell align='left'>{DegreeC ?? 'Nil'}</TableCell>
+											</TableRow>
+											<TableRow>
+												<TableCell align='left'>MASTERS COURSE</TableCell>
+												<TableCell align='left'>{MasterC ?? 'Nil'}</TableCell>
 											</TableRow>
 											<TableRow>
 												<TableCell align='left'>PGD COURSE</TableCell>
-												<TableCell align='left'>{PgdC || 'Nil'}</TableCell>
+												<TableCell align='left'>{PgdC ?? 'Nil'}</TableCell>
 											</TableRow>
 										</TableBody>
 									</Table>

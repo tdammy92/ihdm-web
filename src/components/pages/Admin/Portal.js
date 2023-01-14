@@ -14,6 +14,8 @@ import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Divider from "@mui/material/Divider";
 
+import ReplayIcon from '@mui/icons-material/Replay';
+
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormHelperText from "@mui/material/FormHelperText";
@@ -99,7 +101,7 @@ function Portal() {
 	const [SearchValue, setSearchValue] = useState("");
 
 	function ResetForm() {
-		setSearchBy("First Name");
+		setSearchBy("Fname");
 		setSearchValue("");
 		setDae(new Date());
 	}
@@ -111,6 +113,7 @@ function Portal() {
 				headers: { Authorization: `Bearer ${token}` },
 			})
 			.then((res) => {
+	
 				setRegisterd(res.data);
 				ResetForm();
 				setLoader(false);
@@ -123,44 +126,48 @@ function Portal() {
 
 	function Filter() {
 		if (SearchBy === "Fname") {
-			const url = `${BaseApi}/registers?Fname_eq=${SearchValue}&_sort=createdAt:DESC&`;
+			const url = `${BaseApi}/student?Fname=${SearchValue}&_sort=createdAt:DESC&`;
 
 			ApiRequest(url);
 		} else if (SearchBy === "Lname") {
-			const url = `${BaseApi}/registers?Lname_eq=${SearchValue}&_sort=createdAt:DESC&`;
+			const url = `${BaseApi}/student?Lname=${SearchValue}&_sort=createdAt:DESC&`;
 
 			ApiRequest(url);
 		} else if (SearchBy === "State") {
-			const url = `${BaseApi}/registers?state=${SearchValue}&_sort=createdAt:DESC&`;
+			const url = `${BaseApi}/student?state=${SearchValue}&_sort=createdAt:DESC&`;
 
 			ApiRequest(url);
 		} else if (SearchBy === "Phone") {
-			const url = `${BaseApi}/registers?phone=${SearchValue}&_sort=createdAt:DESC&`;
+			const url = `${BaseApi}/student?phone=${SearchValue}&_sort=createdAt:DESC&`;
 
 			ApiRequest(url);
 		}else if(SearchBy === "StateCode"){
-			const url = `${BaseApi}/registers?stateCode=${SearchValue}&_sort=createdAt:DESC&`;
+			const url = `${BaseApi}/student?stateCode=${SearchValue}&_sort=createdAt:DESC&`;
 
 			ApiRequest(url);
 
 		} else if (SearchBy === "Date") {
 			const SearchDate = Dae.toISOString().split("T")[0];
 			console.log(SearchDate);
-			const url = `${BaseApi}/registers?createdAt=${SearchDate}&_sort=createdAt:DESC&`;
+			const url = `${BaseApi}/student?createdAt=${SearchDate}&_sort=createdAt:DESC&`;
 
 			ApiRequest(url);
 		}
 	}
 
 	async function getTotalRegisterd() {
+
+		setLoader(true)
 		axios
 			.get(`${BaseApi}/student`, {
 				headers: { Authorization: `Bearer ${token}` },
 			})
 			.then((res) => {
+				setLoader(false)
 				setRegisterd(res.data);
 			})
 			.catch((err) => {
+				setLoader(false)
 				return console.log(err.message);
 			});
 	}
@@ -218,8 +225,8 @@ function Portal() {
 					width: { wpx: 125 },
 				},
 			],
-			data: Registerd.map((data,i) => [
-				// { value: i+1, style: { font: { sz: "12" } } },
+			data: Registerd?.map((data,i) => [
+				{ value: i+1, style: { font: { sz: "12" } } },
 				{ value: data.Fname, style: { font: { sz: "12" } } },
 				{ value: data.Lname, style: { font: { sz: "12" } } },
 				{ value: data.phone, style: { font: { sz: "12" } } },
@@ -299,18 +306,42 @@ function Portal() {
 											/>
 										)}
 
+									
+									</Stack>
+								</div>
+
+							
+							</div>
+							<div className='filter__items'>
+									<Stack
+										direction={isMobile ? "column" : "row"}
+										divider={<Divider orientation='vertical' flexItem />}
+										justifyContent='center'
+										alignItems='center'
+										spacing={2}
+									
+									>
+										
 										<Button
 											type='button'
 											variant='contained'
 											endIcon={<SearchIcon />}
 											onClick={Filter}
-											// style={{marginLeft:'5px'}}
+										
 										>
 											Search
 										</Button>
+										<Button
+											type='button'
+											variant='outlined'
+											endIcon={<ReplayIcon />}
+											onClick={getTotalRegisterd}
+										
+										>
+											Reset
+										</Button>
 									</Stack>
 								</div>
-							</div>
 							<div className='filter__container'>
 								<div className='filter__items'>
 									<Stack direction='row' spacing={2}  
@@ -384,8 +415,12 @@ function Portal() {
 											<TableRow>
 												<TableCell
 													align='center'
+													size="medium"
+													sx={{m:0,p:0}}
 													style={{
-														minWidth: 70,
+														minWidth: 20,
+														maxWidth:30
+														
 													}}
 												>
 												S/N
@@ -401,7 +436,7 @@ function Portal() {
 												<TableCell
 													align='center'
 													style={{
-														minWidth: 70,
+														minWidth: 50,
 													}}
 												>
 													PHONE
@@ -409,8 +444,9 @@ function Portal() {
 
 												<TableCell
 													align='center'
+													sx={{m:0,p:0}}
 													style={{
-														minWidth: 70,
+														minWidth: 50,
 													}}
 												>
 													EMAIL
@@ -418,24 +454,27 @@ function Portal() {
 
 												<TableCell
 													align='center'
+													sx={{m:0,p:0}}
 													style={{
-														minWidth: 70,
+														minWidth: 50,
 													}}
 												>
 													STATE
 												</TableCell>
 												<TableCell
 													align='center'
+													sx={{m:0,p:0}}
 													style={{
-														minWidth: 70,
+														minWidth: 30,
 													}}
 												>
 													STATE-CODE
 												</TableCell>
 												<TableCell
 													align='center'
+													sx={{m:0,p:0}}
 													style={{
-														minWidth: 70,
+														minWidth: 40,
 													}}
 												>
 													DATE
@@ -448,7 +487,7 @@ function Portal() {
 													<TableCell>No Result Found</TableCell>
 												</TableRow>
 											) : (
-												Registerd?.map((item,i) => {
+												Registerd?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)?.map((item,i) => {
 													const {
 														_id,
 														Fname,
@@ -470,7 +509,7 @@ function Portal() {
 															style={{ textDecoration: "none" }}
 														>
 															<TableCell align='center'>
-																{i+1}
+																{1+i}
 															</TableCell>
 															<TableCell align='center'>
 																{Fname} {Lname}
@@ -491,7 +530,7 @@ function Portal() {
 								</TableContainer>
 
 								<TablePagination
-									rowsPerPageOptions={[10, 25, 100]}
+									rowsPerPageOptions={[10, 25,50, 100]}
 									component='div'
 									count={Registerd?.length}
 									rowsPerPage={rowsPerPage}

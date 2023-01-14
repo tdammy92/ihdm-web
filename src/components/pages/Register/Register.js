@@ -10,6 +10,8 @@ import { Container } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
 
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 // date-fns
@@ -28,6 +30,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Select from "@mui/material/Select";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
+import Divider from "@mui/material/Divider";
 
 import FormControl from "@mui/material/FormControl";
 import ListItemText from "@mui/material/ListItemText";
@@ -138,7 +141,10 @@ const Membership = [
 	"Affiliate Member (AFiHDM)",
 	"Associate Member (AiHDM)",
 	"Full Member (MiHDM)",
+	'Associate Fellow',
 	"Fellow Member (FiHDM)",
+	"Senior Fellow",
+	"Doctoral  Fellow",
 ];
 
 export default function Register() {
@@ -147,7 +153,6 @@ export default function Register() {
 
 	const alert = useAlert();
 
-
 	const [FirstName, setFirstName] = useState("");
 	const [LastName, setLastName] = useState("");
 	const [Phone, setPhone] = useState("");
@@ -155,6 +160,7 @@ export default function Register() {
 	const [Address, setAddress] = useState("");
 	const [NigerState, setNigerState] = useState("Abuja(FCT)");
 	const [StateCode, setStateCode] = useState("");
+	const [serialNumber, setserialNumber] = useState("");
 
 	const [Spec, setSpec] = useState("Nil");
 
@@ -178,6 +184,10 @@ export default function Register() {
 	const [DateLeft2, setDateLeft2] = useState(new Date());
 
 	const [Diplom, setDiplom] = useState("Nil");
+	const [degree, setDegree] = useState("Nil");
+	const [masters, setMasters] = useState("Nil");
+	const [Pgd, setPgd] = useState([]);
+
 
 	// pgd select checkbox code
 	const ITEM_HEIGHT = 40;
@@ -191,7 +201,7 @@ export default function Register() {
 		},
 	};
 
-	const [Pgd, setPgd] = useState([]);
+
 
 	const PgdChange = (event) => {
 		const {
@@ -201,11 +211,10 @@ export default function Register() {
 			// On autofill we get a the stringified value.
 			typeof value === "string" ? value.split(",") : value
 		);
-
-		
 	};
 
 	const [Memba, setMemba] = useState("Nil");
+
 
 	function ResetInput() {
 		setFirstName("");
@@ -221,6 +230,8 @@ export default function Register() {
 		setDate1(new Date());
 		setDate2(new Date());
 		setDiplom("Nil");
+		setDegree('Nil')
+		setMasters('Nil')
 		setPgd([]);
 		setAccept(false);
 		setcurrentRole("");
@@ -231,6 +242,7 @@ export default function Register() {
 		setDateJoind2(new Date());
 		setDateLeft2(new Date());
 		setMemba("Nil");
+		setserialNumber("");
 	}
 
 	function submitForm() {
@@ -248,6 +260,8 @@ export default function Register() {
 			SecondInst: SecondInst,
 			DateCompleted2: Date2,
 			DiplomaC: Diplom,
+			DegreeC: degree,
+			MasterC: masters,
 			PgdC: Pgd.toString(),
 			currentRole: currentRole,
 			currentOrg: currentOrg,
@@ -257,24 +271,30 @@ export default function Register() {
 			DateJoinedPast: DateJoind2,
 			DateLeftPast: DateLeft2,
 			membershipCat: Memba,
+			serialNumber,
 		};
 
-		if (((FirstName === "") || (LastName === "") || (Phone === "") || (StateCode==="")) || ((Diploma==='Nil') && (Spec==='Nil') && (Memba === 'Nil'))){
-			alert.show(`Please fill all important fileds`, {
+		if (
+			serialNumber === "" ||
+			FirstName === "" ||
+			LastName === "" ||
+			Phone === "" ||
+			StateCode === "" ||
+			(Diploma === "Nil"  === "Nil" && Memba === "Nil")
+		) {
+			alert.show(`Please fill all important fileds *`, {
 				title: "Incomplete Details",
 				type: types.ERROR,
 			});
 		} else {
 			setLoader(true);
 
-			
-
 			axios
-				.post(`${BaseApi}/student/register`,details)
+				.post(`${BaseApi}/student/register`, details)
 				.then((res) => {
 					console.log(res.data);
 
-					if (res?.status===201 || res?.status ===200) {
+					if (res?.status === 201 || res?.status === 200) {
 						alert.show(
 							`Dear ${FirstName} ${LastName} your form has been submitted successfully`,
 							{
@@ -299,7 +319,7 @@ export default function Register() {
 	}
 
 	useEffect(() => {
-		window.scrollTo(0, 0);
+		// window.scrollTo(0, 0);
 	}, []);
 
 	return (
@@ -311,20 +331,21 @@ export default function Register() {
 							<h3 className='page__subtitle'>IHDM Registration Portal</h3>
 						</div>
 
-						<Paper style={{ marginTop: "20px", padding: "5px" }}>
+						<Paper
+						// style={{ marginTop: "20px", padding: "5px" }}
+						>
 							<div className='form__wrapper'>
 								<form
 									action=''
 									// onSubmit={handleSubmit(submitForm)}
 								>
-									<div className='form__container'>
-										<div>
+									<Paper className='form__container' elevation={2}>
+										<div style={{ marginTop: "10px", paddingTop: "30px" }}>
 											<Typography
 												variant='h6'
 												component='h6'
 												color='primary'
 												textAlign='center'
-												marginTop='10px'
 											>
 												Personal Information
 											</Typography>
@@ -445,6 +466,7 @@ export default function Register() {
 												required
 											/>
 										</div>
+										<Divider />
 										<Typography
 											variant='h6'
 											component='h6'
@@ -513,6 +535,7 @@ export default function Register() {
 										</div>
 
 										<div>
+											<Divider />
 											<Typography
 												variant='h6'
 												component='h6'
@@ -633,7 +656,7 @@ export default function Register() {
 												</Stack>
 											</LocalizationProvider>
 										</div>
-
+										<Divider />
 										<Typography
 											variant='h6'
 											component='h6'
@@ -644,7 +667,7 @@ export default function Register() {
 											Select Program
 										</Typography>
 										<div className='form__items'>
-											<TextField
+											{/* <TextField
 												id='outlined-select-currency'
 												select
 												label='Select Specialization'
@@ -659,7 +682,7 @@ export default function Register() {
 														{option}
 													</MenuItem>
 												))}
-											</TextField>
+											</TextField> */}
 
 											<TextField
 												id='outlined-select-currency'
@@ -673,6 +696,41 @@ export default function Register() {
 												{Diploma.map((option) => (
 													<MenuItem key={option} value={option}>
 														{option}
+													</MenuItem>
+												))}
+											</TextField>
+
+											<TextField
+												id='outlined-select-currency'
+												select
+												label='Degree Programs'
+												value={Memba}
+												onChange={(e) => setDegree(e.target.value)}
+												helperText='Select Degree category according to your qualification.
+'
+												style={{ width: "300px", margin: "15px" }}
+												required
+											>
+												{Diploma.map((option) => (
+													<MenuItem key={option} value={option.replace('Diploma','Degree')}>
+													{option.replace('Diploma','Degree')}
+													</MenuItem>
+												))}
+											</TextField>
+											<TextField
+												id='outlined-select-currency'
+												select
+												label='Masters programs'
+												value={Memba}
+												onChange={(e) => setMasters(e.target.value)}
+												helperText='Select Masters category according to your qualification.
+'
+												style={{ width: "300px", margin: "15px" }}
+												required
+											>
+												{Diploma.map((option) => (
+													<MenuItem key={option} value={option.replace('Diploma','Masters')}>
+														{option.replace('Diploma','Masters')}
 													</MenuItem>
 												))}
 											</TextField>
@@ -728,17 +786,12 @@ export default function Register() {
 													MenuProps={MenuProps}
 												>
 													{PgdList.map((name) => (
-														<MenuItem
-															key={name}
-															value={name}
-															
-														>
+														<MenuItem key={name} value={name}>
 															{name}
 														</MenuItem>
 													))}
 												</Select>
 
-												
 												<span
 													style={{
 														fontSize: "12px",
@@ -752,6 +805,8 @@ export default function Register() {
 												</span>
 											</FormControl>
 										</div>
+
+										<Divider />
 										<Typography
 											variant='h6'
 											component='h6'
@@ -765,7 +820,7 @@ export default function Register() {
 											<TextField
 												id='outlined-select-currency'
 												select
-												label='Select membership'
+												label='Select Membership'
 												value={Memba}
 												onChange={(e) => setMemba(e.target.value)}
 												helperText='Select Membership category according to your qualification.
@@ -780,6 +835,116 @@ export default function Register() {
 												))}
 											</TextField>
 										</div>
+										<Box sx={{ minWidth: 275 }}>
+											<Paper variant='outlined' elevation={4}>
+												<div
+													className='form__items'
+													style={{
+														display: "flex",
+														flexDirection: "column",
+														textAlign: "center",
+													}}
+												>
+													<Typography
+														variant='h6'
+														component='h6'
+														color='primary'
+														textAlign='center'
+														marginTop='15px'
+														style={{ width: "100%" }}
+													>
+														Payment Details
+													</Typography>
+													<Typography
+														variant='subtitle2'
+														style={{ width: "100%" }}
+														color='primary'
+														textAlign='center'
+														marginTop='10px'
+													>
+														*Pay application fee to obtain Serial Number to
+														complete your application .
+													</Typography>
+
+													<div
+														style={{
+															display: "flex",
+															flexDirection: "column",
+															justifyContent: "center",
+															alignItems: "flex-start",
+															padding: 10,
+														}}
+													>
+														<div style={{ display: "flex", width: "100%" }}>
+															<Typography variant='body1' varient='h6'>
+																Account Number :
+															</Typography>
+															<Typography
+																align='left'
+																variant='body1'
+																color='#1976d2'
+															>
+																1760111727
+															</Typography>
+														</div>
+														<div style={{ display: "flex", width: "100%" }}>
+															<Typography variant='body1'>
+																Account Name :
+															</Typography>
+															<Typography
+																align='left'
+																variant='body1'
+																color='#1976d2'
+															>
+																Institute of Humanitarian and Disaster
+																Management
+															</Typography>
+														</div>
+														<div style={{ display: "flex", width: "100%" }}>
+															<Typography variant='body1'>Bank :</Typography>
+															<Typography
+																align='left'
+																variant='body1'
+																color='#1976d2'
+															>
+																Ecobank Nig
+															</Typography>
+														</div>
+													</div>
+													<div>
+														<FormGroup>
+															<TextField
+																variant='filled'
+																id='outlined-basic'
+																label='Serial Number'
+																type='text'
+																placeholder='XXXX-XXXX-XXXX-XXXX'
+																value={serialNumber}
+																onChange={(e) =>
+																	setserialNumber(e.target.value)
+																}
+																style={{ width: "300px", margin: "15px" }}
+																required
+															/>
+														</FormGroup>
+													</div>
+													<Typography
+														variant='body1'
+														color='#1976d2'
+														gutterBottom
+													>
+														Please contact admin for Serial Number:
+													</Typography>
+													<Typography
+														variant='body1'
+														color='#1976d2'
+														gutterBottom
+													>
+														08074090417, 07038286393, 07033458730
+													</Typography>
+												</div>
+											</Paper>
+										</Box>
 
 										<div className='form__items'>
 											<div className='form__checkBox'>
@@ -798,22 +963,9 @@ export default function Register() {
 												</FormGroup>
 											</div>
 										</div>
-									</div>
+									</Paper>
 								</form>
-								<span
-									style={{
-										fontSize: "12px",
-										color: "red",
-										textAlign: "center",
-										width: "100%",
-										fontFamily: "serif",
-										padding: "5px",
-										marginBottom: "5px",
-									}}
-								>
-									INSTRUCTION: Note that, filling online form, without paying
-									the necessary fee, will not be treated.
-								</span>
+
 								<Stack direction='row' spacing={2}>
 									<Button
 										variant='outlined'
