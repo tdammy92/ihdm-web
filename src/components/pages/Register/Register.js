@@ -89,6 +89,8 @@ const StateList = [
 
 const Diploma = [
 	"Nil",
+	"Diploma in Public Health",
+	"Diploma in Public Health Nursing",
 	"Diploma in Social and Community Development",
 	"Diploma in Monitoring and Evaluation",
 	"Diploma in Project Planning and Management",
@@ -107,6 +109,8 @@ const Diploma = [
 
 const PgdList = [
 	"Nil",
+	"PGD Diploma in Public Health",
+"PGD Diploma in Public Health Nursing",
 	"PGD Diploma in Humanitarian and Disaster Risk Management",
 	"PGD Diploma in Humanitarian and Refugee Management",
 	"Professional PGD in Social and Community Development",
@@ -141,7 +145,7 @@ const Membership = [
 	"Affiliate Member (AFiHDM)",
 	"Associate Member (AiHDM)",
 	"Full Member (MiHDM)",
-	'Associate Fellow',
+	"Associate Fellow",
 	"Fellow Member (FiHDM)",
 	"Senior Fellow",
 	"Doctoral  Fellow",
@@ -188,7 +192,6 @@ export default function Register() {
 	const [masters, setMasters] = useState("Nil");
 	const [Pgd, setPgd] = useState([]);
 
-
 	// pgd select checkbox code
 	const ITEM_HEIGHT = 40;
 	const ITEM_PADDING_TOP = 4;
@@ -201,8 +204,6 @@ export default function Register() {
 		},
 	};
 
-
-
 	const PgdChange = (event) => {
 		const {
 			target: { value },
@@ -214,7 +215,6 @@ export default function Register() {
 	};
 
 	const [Memba, setMemba] = useState("Nil");
-
 
 	function ResetInput() {
 		setFirstName("");
@@ -230,8 +230,8 @@ export default function Register() {
 		setDate1(new Date());
 		setDate2(new Date());
 		setDiplom("Nil");
-		setDegree('Nil')
-		setMasters('Nil')
+		setDegree("Nil");
+		setMasters("Nil");
 		setPgd([]);
 		setAccept(false);
 		setcurrentRole("");
@@ -280,11 +280,11 @@ export default function Register() {
 			LastName === "" ||
 			Phone === "" ||
 			StateCode === "" ||
-			(Diploma === "Nil"  === "Nil" && Memba === "Nil")
+			((Diploma === "Nil") === "Nil" && Memba === "Nil")
 		) {
 			alert.show(`Please fill all important fileds *`, {
 				title: "Incomplete Details",
-				type: types.ERROR,
+				type: types.INFO,
 			});
 		} else {
 			setLoader(true);
@@ -298,22 +298,37 @@ export default function Register() {
 						alert.show(
 							`Dear ${FirstName} ${LastName} your form has been submitted successfully`,
 							{
-								title: "Notification !!!",
+								title: "Registration successful",
 								type: types.SUCCESS,
 							}
 						);
 						ResetInput();
 					}
+					
+				
+
 					setLoader(false);
 				})
 				.catch((error) => {
-					console.log(error.message);
+					console.log("errorrr",error.status);
 					setLoader(false);
 
-					alert.show(`${error.message}`, {
-						title: "Oops !!!",
-						type: types.ERROR,
-					});
+
+
+					if (error?.message.includes('402')) {
+						
+						alert.show(`Invalid serial number contact the following numbers if you feel otherwise.
+						 08074090417, 07038286393, 07033458730`, {
+							title: "Registration failed",
+							type: types.ERROR,
+						});
+					}else{
+						alert.show(`${error?.message}`, {
+							title: "Registration failed",
+							type: types.ERROR,
+						});
+					}
+
 				});
 		}
 	}
@@ -712,8 +727,11 @@ export default function Register() {
 												required
 											>
 												{Diploma.map((option) => (
-													<MenuItem key={option} value={option.replace('Diploma','Degree')}>
-													{option.replace('Diploma','Degree')}
+													<MenuItem
+														key={option}
+														value={option.replace("Diploma", "Degree")}
+													>
+														{option.replace("Diploma", "Degree")}
 													</MenuItem>
 												))}
 											</TextField>
@@ -729,8 +747,11 @@ export default function Register() {
 												required
 											>
 												{Diploma.map((option) => (
-													<MenuItem key={option} value={option.replace('Diploma','Masters')}>
-														{option.replace('Diploma','Masters')}
+													<MenuItem
+														key={option}
+														value={option.replace("Diploma", "Masters")}
+													>
+														{option.replace("Diploma", "Masters")}
 													</MenuItem>
 												))}
 											</TextField>
