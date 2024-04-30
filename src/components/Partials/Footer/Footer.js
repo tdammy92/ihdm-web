@@ -56,6 +56,9 @@ function handleLogout() {
 						{/* <h2>Socials</h2> */}
 					
 						<Link to='/career'>Career</Link>
+						<Link to='/policy'>Policy</Link>
+						<Link to='/money-laundry'>Money laundry</Link>
+						<Link to='/t&c'>Terms and Condition</Link>
 						<Link to='/media'>Media</Link>
 						<Link to='/project'>Projects</Link>
 						<Link to='/license'>License</Link>

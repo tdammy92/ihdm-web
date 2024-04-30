@@ -15,6 +15,9 @@ import Nysc from "../../pages/Nysc/Nysc";
 import Career from "../../pages/FooterPages/Career";
 import Media from "../../pages/FooterPages/Media";
 import Projects from "../../pages/FooterPages/Projects";
+import Policy from "../../pages/FooterPages/Policy";
+import MoneyLaundry from "../../pages/FooterPages/MoneyLaundry";
+import TermsC from "../../pages/FooterPages/TermsC";
 import License from "../../pages/FooterPages/License";
 import Th from "../../pages/FooterPages/Th";
 import Hcb from "../../pages/FooterPages/Hcb";
@@ -52,6 +55,9 @@ function RootNav() {
 						<Route path='/register' component={Register} />
 						<Route path='/career' component={Career} />
 						<Route path='/affiliate' component={Affiliate} />
+						<Route path='/policy' component={Policy} />
+						<Route path='/money-laundry' component={MoneyLaundry} />
+						<Route path='/t&c' component={TermsC} />
 						<Route path='/media' component={Media} />
 						<Route path='/project' component={Projects} />
 						<Route path='/license' component={License} />
