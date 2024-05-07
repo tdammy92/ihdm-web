@@ -17,7 +17,7 @@ function MoneyLaundry() {
     <>
       <PageHero
         img={HeroImage}
-        title="MONEY LAUNDERING"
+        title="ANTI-MONEY LAUNDERING POLICY"
         subtitle="Anti-Money Laundry Policy"
       />
 
@@ -262,6 +262,8 @@ function MoneyLaundry() {
                 </div>
                
                 <Signature />
+
+             
               </div>
             </div>
           </Container>

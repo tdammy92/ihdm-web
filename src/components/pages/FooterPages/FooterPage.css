@@ -283,3 +283,26 @@
         font-weight: 300;
         padding: 10px;
     }
+
+
+
+
+
+
+    .director__signature {
+        margin-top: 100px;
+        padding: 5px;
+        z-index: 100;
+        position: relative;
+    }
+
+    .director__signature>img{
+        position: absolute;
+        max-height: 150px;
+        max-width: 150px;
+        z-index: 1000;
+        top:-120px
+        /* margin-bottom: 20px; */
+        /* border-radius: 50%; */
+    }
+

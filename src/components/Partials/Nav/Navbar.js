@@ -14,9 +14,11 @@ function Navbar() {
 
 	// const isMobile = useMediaQuery({ maxWidth: 960 });
 
+	// console.log("Brand Image",BrandLogo);
+
 	const location = useLocation().pathname;
 
-	console.log(location)
+	// console.log(location)
 
 	const showButton = () => {
 		if (window.innerWidth <= 960) {

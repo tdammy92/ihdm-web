@@ -17,7 +17,7 @@ function Policy() {
     <>
       <PageHero
         img={HeroImage}
-        title="POLICIES"
+        title="PRIVACY POLICY"
         subtitle="Know about our policies"
       />
 

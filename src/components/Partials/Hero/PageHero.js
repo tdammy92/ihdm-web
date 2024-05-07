@@ -22,7 +22,7 @@ function PageHero({img,title,subtitle}) {
             <div className='down__arrow'>
              <p>Scroll Down</p>
 
-            <div></div>
+          
              <motion.i 
              animate={{y:20,opacity:0.6}}
              transition={ArrowAnimation}
